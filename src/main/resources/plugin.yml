@@ -1,4 +1,4 @@
-main: tootymc.App
+main: tootymc.tooty
 name: TootyMC
 version: 0.0.0a
 description: Um please work?
