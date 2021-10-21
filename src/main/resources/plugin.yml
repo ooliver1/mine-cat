@@ -1,6 +1,6 @@
-main: tootymc.tooty
+main: tootymc.Tooty
 name: TootyMC
-version: 0.0.0a
+version: 0.0.0-a
 description: Um please work?
 author: ooliver1 - Oliver WIlkes
 website: https://tooty.xyz
