@@ -29,6 +29,11 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.mitch528.sockets</groupId>
+      <artifactId>Sockets</artifactId>
+      <version>1.0</version>
+    </dependency>
   </dependencies>
   <build>
     <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
