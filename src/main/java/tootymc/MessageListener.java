@@ -7,11 +7,9 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class MessageListener implements Listener {
     private Server mcServer;
-    private Socket socket;
 
-    public MessageListener(Tooty plugin, Socket socket) {
+    public MessageListener(Tooty plugin) {
         this.mcServer = plugin.getServer();
-        this.socket = socket;
         mcServer.getPluginManager().registerEvents(this, plugin);
     }
 

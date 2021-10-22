@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tootymc</groupId>
   <artifactId>Tooty</artifactId>
-  <version>0.0.0-a</version>
+  <version>0.0.0-a2</version>
   <packaging>jar</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,9 +30,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.mitch528.sockets</groupId>
-      <artifactId>Sockets</artifactId>
-      <version>1.0</version>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.11.1</version>
     </dependency>
   </dependencies>
   <build>
@@ -45,5 +45,23 @@
         </includes>
       </resource>
     </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <configuration>
+          <relocations></relocations>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 </project>

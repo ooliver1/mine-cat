@@ -1,7 +1,5 @@
 main: tootymc.Tooty
 name: TootyMC
-version: 0.0.0-a
-description: Um please work?
+version: 0.0.0-a2
 author: ooliver1 - Oliver WIlkes
-website: https://tooty.xyz
 api-version: 1.17
