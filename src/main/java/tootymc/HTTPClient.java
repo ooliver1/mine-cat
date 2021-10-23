@@ -21,12 +21,12 @@ public class HTTPClient {
     private Logger logger;
 
     public HTTPClient(Tooty plugin) {
-        this.client = HttpClient
+        client = HttpClient
                 .newBuilder()
                 .version(Version.HTTP_2)
                 .followRedirects(Redirect.ALWAYS)
                 .build();
-        this.logger = plugin.getServer().getLogger();
+        logger = plugin.getServer().getLogger();
     }
 
     public void postJson(String uri, Map<String, String> map) {
@@ -47,7 +47,7 @@ public class HTTPClient {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(
                         String.format(
-                                "http://[2a02:c7f:dab6:e00:3043:a811:9a29:1f6]:5000/%s",
+                                "http://65.21.247.55:6969/%s",
                                 uri.toString())))
                 .header("Content-Type", "application/json")
                 .POST(BodyPublishers.ofString(requestBody))

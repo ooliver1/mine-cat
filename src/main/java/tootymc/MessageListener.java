@@ -9,7 +9,7 @@ public class MessageListener implements Listener {
     private Server mcServer;
 
     public MessageListener(Tooty plugin) {
-        this.mcServer = plugin.getServer();
+        mcServer = plugin.getServer();
         mcServer.getPluginManager().registerEvents(this, plugin);
     }
 
