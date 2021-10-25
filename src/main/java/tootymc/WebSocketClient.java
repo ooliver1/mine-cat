@@ -34,10 +34,12 @@ public class WebSocketClient {
     private static class WsClient implements WebSocket.Listener {
         private String uuid;
         private Logger logger;
+        private File dataFolder;
 
         public WsClient(Logger logger, Tooty plugin) {
             this.logger = logger;
             this.uuid = plugin.getUuid();
+            this.dataFolder = plugin.getDataFolder();
         }
 
         @Override
@@ -63,12 +65,20 @@ public class WebSocketClient {
                             Object uuid = res.get("uuid");
                             if (uuid != null) {
                                 try {
-                                    File myObj = new File("Tooty/uuid.txt");
+                                    if (!dataFolder.exists()) {
+                                        dataFolder.mkdir();
+                                    }
+                                    File myObj = new File(dataFolder, "uuid.txt");
                                     myObj.createNewFile();
-                                    FileWriter myWriter = new FileWriter("Tooty/uuid.txt");
+                                    FileWriter myWriter =
+                                            new FileWriter(dataFolder.getPath() + "/" + "uuid.txt");
                                     myWriter.write(uuid.toString());
                                     myWriter.close();
-                                    logger.info("Your uuid is in Tooty/uuid.txt");
+                                    logger.info("Your uuid is in TootyMC/uuid.txt");
+                                    JSONObject req = new JSONObject();
+                                    req.put("uuid", uuid.toString());
+                                    req.put("type", "login");
+                                    webSocket.sendText(req.toString(), true);
                                 } catch (IOException e) {
                                     logger.warning("An error occurred.");
                                     e.printStackTrace();

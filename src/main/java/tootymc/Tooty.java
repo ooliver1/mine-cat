@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Tooty extends JavaPlugin {
-    public String uuid = null;
+    private String uuid = null;
     private WebSocket client;
     private Logger logger = getServer().getLogger();
 
@@ -37,7 +37,7 @@ public class Tooty extends JavaPlugin {
             return this.uuid;
         } else {
             try {
-                File file = new File("./Tooty/uuid.txt");
+                File file = new File(this.getDataFolder().getPath() + "/" + "uuid.txt");
                 Scanner myReader = new Scanner(file);
                 if (myReader.hasNextLine()) {
                     String data = myReader.nextLine();
