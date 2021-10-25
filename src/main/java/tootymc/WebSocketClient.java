@@ -72,7 +72,7 @@ public class WebSocketClient {
                                     myObj.createNewFile();
                                     FileWriter myWriter =
                                             new FileWriter(dataFolder.getPath() + "/" + "uuid.txt");
-                                    myWriter.write(uuid.toString());
+                                    myWriter.write(uuid);
                                     myWriter.close();
                                     logger.info("Your uuid is in TootyMC/uuid.txt");
                                     JSONObject req = new JSONObject();
