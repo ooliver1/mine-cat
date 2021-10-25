@@ -35,6 +35,7 @@ public class WebSocketClient {
         private String uuid;
         private Logger logger;
         private File dataFolder;
+        private static final String version = "0.0.0-a13";
 
         public WsClient(Logger logger, Tooty plugin) {
             this.logger = logger;
@@ -48,6 +49,7 @@ public class WebSocketClient {
             JSONObject req = new JSONObject();
             req.put("uuid", uuid);
             req.put("type", "login");
+            req.put("version", version);
             webSocket.sendText(req.toString(), true);
             Listener.super.onOpen(webSocket);
         }
@@ -72,13 +74,9 @@ public class WebSocketClient {
                                     myObj.createNewFile();
                                     FileWriter myWriter =
                                             new FileWriter(dataFolder.getPath() + "/" + "uuid.txt");
-                                    myWriter.write(uuid);
+                                    myWriter.write(uuid.toString());
                                     myWriter.close();
                                     logger.info("Your uuid is in TootyMC/uuid.txt");
-                                    JSONObject req = new JSONObject();
-                                    req.put("uuid", uuid.toString());
-                                    req.put("type", "login");
-                                    webSocket.sendText(req.toString(), true);
                                 } catch (IOException e) {
                                     logger.warning("An error occurred.");
                                     e.printStackTrace();
