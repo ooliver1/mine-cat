@@ -1,34 +1,55 @@
 package tootymc;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.io.File;
+import java.util.Scanner;
+import java.io.IOException;
 import java.util.logging.Logger;
+import java.io.FileNotFoundException;
 import org.bukkit.plugin.java.JavaPlugin;
-import com.sun.net.httpserver.HttpHandler;
 
 public class Tooty extends JavaPlugin {
-    private HTTPClient client;
+    public String uuid = null;
+    // private WebSocketClient wsClient;
     private Logger logger = getServer().getLogger();
 
     @Override
     public void onEnable() {
         logger.info("Tooty is enabling...");
-        client = new HTTPClient(this);
-        logger.info("HTTP is enabled!");
+        uuid = getUuid();
+        logger.info("Your uuid is: '" + uuid + "'");
+        new WebSocketClient(this);
+        logger.info("Websocket client created!");
         new MessageListener(this);
         logger.info("MessageListener is enabled!");
-        logger.info("Initializing HTTP...");
-        Map<String, String> json = new HashMap<String, String>();
-        json.put("message", "test");
-        client.postJson("test", json);
-        logger.info("HTTP tested!");
-        Map<String, HttpHandler> handlers = new HashMap<String, HttpHandler>();
-        handlers.put("/test", new TestHandler(this));
-        new HTTPServer(this, 42000, handlers);
     }
 
     @Override
     public void onDisable() {
         logger.info("Tooty is disabling...");
+    }
+
+    public String getUuid() {
+        if (this.uuid != null) {
+            return this.uuid;
+        } else {
+            try {
+                File file = new File("./Tooty/uuid.txt");
+                Scanner myReader = new Scanner(file);
+                if (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    myReader.close();
+                    return data;
+                }
+                myReader.close();
+            } catch (FileNotFoundException e) {
+                try {
+                    File file = new File("./Tooty/uuid.txt");
+                    file.createNewFile();
+                } catch (IOException e1) {
+                    logger.warning("Could not create/read uuid.txt file ;(");
+                }
+            }
+            return null;
+        }
     }
 }

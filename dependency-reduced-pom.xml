@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tootymc</groupId>
   <artifactId>Tooty</artifactId>
-  <version>0.0.0-a3</version>
+  <version>0.0.0-a6</version>
   <build>
     <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
     <resources>
@@ -36,6 +36,10 @@
     <repository>
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+    <repository>
+      <id>maven2</id>
+      <url>https://repo1.maven.org/maven2</url>
     </repository>
   </repositories>
   <dependencies>

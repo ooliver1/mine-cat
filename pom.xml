@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tootymc</groupId>
   <artifactId>Tooty</artifactId>
-  <version>0.0.0-a3</version>
+  <version>0.0.0-a6</version>
   <packaging>jar</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,8 +15,18 @@
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
+    <repository>
+      <id>maven2</id>
+      <url>https://repo1.maven.org/maven2</url>
+    </repository>
   </repositories>
   <dependencies>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20210307</version>
+      <type>jar</type>
+    </dependency>
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
@@ -28,16 +38,6 @@
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>2.11.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.clerezza.ext</groupId>
-      <artifactId>org.json.simple</artifactId>
-      <version>0.4</version>
     </dependency>
   </dependencies>
   <build>

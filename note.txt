@@ -1,0 +1,2 @@
+mvn dependency:resolve -Dclassifier=javadoc
+1 + 1 = 2
