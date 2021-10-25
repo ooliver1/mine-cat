@@ -1,9 +1,7 @@
 package tootymc;
 
 import java.io.File;
-import java.lang.Thread;
 import java.util.Scanner;
-import java.io.IOException;
 import java.net.http.WebSocket;
 import java.util.logging.Logger;
 import java.io.FileNotFoundException;
