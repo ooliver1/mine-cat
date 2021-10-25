@@ -30,6 +30,8 @@ public class Tooty extends JavaPlugin {
     @Override
     public void onDisable() {
         logger.info("Tooty is disabling...");
+        client.sendClose(1000, "shutting down mc server...");
+        logger.info("Websocket closed with status 1000 as the plugin is disabled");
     }
 
     public String getUuid() {
