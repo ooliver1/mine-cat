@@ -23,6 +23,10 @@ public class WebSocketClient {
         this.webSocket = webSocket;
     }
 
+    public WebSocket getClient() {
+        return this.webSocket;
+    }
+
     private static class WsClient implements WebSocket.Listener {
         private String uuid;
         private Logger logger;

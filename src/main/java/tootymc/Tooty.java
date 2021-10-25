@@ -1,15 +1,17 @@
 package tootymc;
 
 import java.io.File;
+import java.lang.Thread;
 import java.util.Scanner;
 import java.io.IOException;
+import java.net.http.WebSocket;
 import java.util.logging.Logger;
 import java.io.FileNotFoundException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Tooty extends JavaPlugin {
     public String uuid = null;
-    // private WebSocketClient wsClient;
+    private WebSocket client;
     private Logger logger = getServer().getLogger();
 
     @Override
@@ -17,8 +19,12 @@ public class Tooty extends JavaPlugin {
         logger.info("Tooty is enabling...");
         uuid = getUuid();
         logger.info("Your uuid is: '" + uuid + "'");
-        new WebSocketClient(this);
+        WebSocketClient wsClient = new WebSocketClient(this);
         logger.info("Websocket client created!");
+        this.client = wsClient.getClient();
+        Thread thread = new Thread(new PaceMaker(this.client));
+        thread.start();
+        logger.info("PaceMaker started!");
         new MessageListener(this);
         logger.info("MessageListener is enabled!");
     }
@@ -42,14 +48,9 @@ public class Tooty extends JavaPlugin {
                 }
                 myReader.close();
             } catch (FileNotFoundException e) {
-                try {
-                    File file = new File("./Tooty/uuid.txt");
-                    file.createNewFile();
-                } catch (IOException e1) {
-                    logger.warning("Could not create/read uuid.txt file ;(");
-                }
+                return "unknown";
             }
-            return null;
+            return "unknown";
         }
     }
 }
