@@ -31,7 +31,11 @@ public class Tooty extends JavaPlugin {
     @Override
     public void onDisable() {
         logger.info("Tooty is disabling...");
-        client.sendClose(1000, "shutting down mc server...");
+        try {
+            client.sendClose(1000, "shutting down mc server...");
+        } catch (NullPointerException e) {
+            logger.warning("Cannot close as client is null ;(");
+        }
         logger.info("Websocket closed with status 1000 as the plugin is disabled");
         try {
             players.close();

@@ -11,6 +11,7 @@ import java.net.http.HttpClient;
 import java.util.logging.Logger;
 import java.net.http.WebSocket.Listener;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.CompletionException;
 
 public class WebSocketClient {
     private Logger logger;
@@ -19,12 +20,16 @@ public class WebSocketClient {
     public WebSocketClient(Tooty plugin) {
         logger = plugin.getLogger();
         HttpClient httpClient = HttpClient.newHttpClient();
-        WebSocket webSocket = httpClient.newWebSocketBuilder()
-                .buildAsync(URI.create("ws://65.21.247.55:6969"), new WsClient(this.logger, plugin))
-                .join();
-
-        logger.info("The WebSocket was created and ran asynchronously.");
-        this.webSocket = webSocket;
+        try {
+            WebSocket webSocket = httpClient.newWebSocketBuilder()
+                    .buildAsync(URI.create("ws://65.21.247.55:6969"), new WsClient(
+                            this.logger, plugin))
+                    .join();
+            logger.info("The WebSocket was created and ran asynchronously.");
+            this.webSocket = webSocket;
+        } catch (CompletionException e) {
+            logger.warning("Failed to connect to tooty ;(");
+        }
     }
 
     public WebSocket getClient() {
@@ -35,7 +40,7 @@ public class WebSocketClient {
         private String uuid;
         private Logger logger;
         private File dataFolder;
-        private static final String version = "0.0.0-a13";
+        private static final String version = "0.0.0-a15";
 
         public WsClient(Logger logger, Tooty plugin) {
             this.logger = logger;
@@ -65,7 +70,7 @@ public class WebSocketClient {
                     case "login": {
                         try {
                             Object uuid = res.get("uuid");
-                            if (uuid != null) {
+                            if (uuid != null && uuid != "null") {
                                 try {
                                     if (!dataFolder.exists()) {
                                         dataFolder.mkdir();
