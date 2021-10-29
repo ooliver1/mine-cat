@@ -2,14 +2,16 @@ package tootymc;
 
 import java.io.File;
 import java.util.Scanner;
+import java.sql.SQLException;
 import java.net.http.WebSocket;
 import java.util.logging.Logger;
 import java.io.FileNotFoundException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Tooty extends JavaPlugin {
-    private String uuid = null;
+    private Players players;
     private WebSocket client;
+    private String uuid = null;
     private Logger logger = getServer().getLogger();
 
     @Override
@@ -20,11 +22,10 @@ public class Tooty extends JavaPlugin {
         WebSocketClient wsClient = new WebSocketClient(this);
         logger.info("Websocket client created!");
         this.client = wsClient.getClient();
-        Thread thread = new Thread(new PaceMaker(this.client));
-        thread.start();
-        logger.info("PaceMaker started!");
         new MessageListener(this);
         logger.info("MessageListener is enabled!");
+        this.players = new Players(this);
+        logger.info("Players manager is enabled!");
     }
 
     @Override
@@ -32,6 +33,11 @@ public class Tooty extends JavaPlugin {
         logger.info("Tooty is disabling...");
         client.sendClose(1000, "shutting down mc server...");
         logger.info("Websocket closed with status 1000 as the plugin is disabled");
+        try {
+            players.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getUuid() {
