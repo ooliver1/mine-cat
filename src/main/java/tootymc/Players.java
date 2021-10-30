@@ -24,7 +24,7 @@ public class Players {
         if (!dataFolder.exists()) {
             dataFolder.mkdir();
         }
-        String databaseUri = databaseProtocol + ":" + dataFolder.getPath() + "database.db";
+        String databaseUri = databaseProtocol + ":" + dataFolder.getPath() + "/database.db";
         logger.info("Connecting to database with uri: " + databaseUri);
         try {
             this.conn = DriverManager.getConnection(databaseUri);
