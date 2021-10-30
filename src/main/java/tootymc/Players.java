@@ -82,6 +82,8 @@ public class Players {
     }
 
     public void addPlayer(String uuid, String id) {
+        this.discordToUuid.put(id, uuid);
+        this.uuidToDiscord.put(uuid, id);
         CompletableFuture.supplyAsync(() -> {
             try {
                 statement.executeUpdate(

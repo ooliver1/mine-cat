@@ -12,7 +12,7 @@ public class Tooty extends JavaPlugin {
     private Players players;
     private WebSocket client;
     private String uuid = null;
-    private Logger logger = getServer().getLogger();
+    private Logger logger = getLogger();
 
     @Override
     public void onEnable() {
@@ -22,10 +22,18 @@ public class Tooty extends JavaPlugin {
         WebSocketClient wsClient = new WebSocketClient(this);
         logger.info("Websocket client created!");
         this.client = wsClient.getClient();
-        new MessageListener(this);
+        new MessageListener(this, this.client);
         logger.info("MessageListener is enabled!");
         this.players = new Players(this);
         logger.info("Players manager is enabled!");
+    }
+
+    public void addPlayer(String uuid, String id) {
+        players.addPlayer(uuid, id);
+    }
+
+    public String getDiscordId(String uuid) {
+        return this.players.getDiscordId(uuid);
     }
 
     @Override

@@ -22,8 +22,8 @@ public class WebSocketClient {
         HttpClient httpClient = HttpClient.newHttpClient();
         try {
             WebSocket webSocket = httpClient.newWebSocketBuilder()
-                    .buildAsync(URI.create("ws://65.21.247.55:6969"), new WsClient(
-                            this.logger, plugin))
+                    .buildAsync(URI.create("ws://65.21.247.55:6969"),
+                            new WsClient(plugin))
                     .join();
             logger.info("The WebSocket was created and ran asynchronously.");
             this.webSocket = webSocket;
@@ -38,13 +38,15 @@ public class WebSocketClient {
 
     private static class WsClient implements WebSocket.Listener {
         private String uuid;
+        private Tooty plugin;
         private Logger logger;
         private File dataFolder;
         private static final String version = "0.0.0-a17";
 
-        public WsClient(Logger logger, Tooty plugin) {
-            this.logger = logger;
+        public WsClient(Tooty plugin) {
+            this.plugin = plugin;
             this.uuid = plugin.getUuid();
+            this.logger = plugin.getLogger();
             this.dataFolder = plugin.getDataFolder();
         }
 
@@ -91,6 +93,16 @@ public class WebSocketClient {
                             }
                         } catch (JSONException e) {
                             logger.warning("Uuid not in payload?" + e);
+                        }
+                    }
+                    case "player": {
+                        try {
+                            Object id = res.get("id");
+                            Object uuid = res.get("uuid");
+                            this.plugin.addPlayer(uuid.toString(), id.toString());
+                        } catch (JSONException e) {
+                            logger.warning("Id or uuid not in payload?" + e);
+                            e.printStackTrace();
                         }
                     }
                 }
