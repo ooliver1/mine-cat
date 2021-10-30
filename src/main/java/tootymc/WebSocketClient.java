@@ -40,7 +40,7 @@ public class WebSocketClient {
         private String uuid;
         private Logger logger;
         private File dataFolder;
-        private static final String version = "0.0.0-a15";
+        private static final String version = "0.0.0-a16";
 
         public WsClient(Logger logger, Tooty plugin) {
             this.logger = logger;

@@ -24,8 +24,8 @@ public class Players {
         if (!dataFolder.exists()) {
             dataFolder.mkdir();
         }
-        String databaseUri = databaseProtocol + ":" + dataFolder.getAbsolutePath();
-        logger.info("Connecting to database...");
+        String databaseUri = databaseProtocol + ":" + dataFolder.getPath() + "database.db";
+        logger.info("Connecting to database with uri: " + databaseUri);
         try {
             this.conn = DriverManager.getConnection(databaseUri);
             this.statement = conn.createStatement();
@@ -36,8 +36,7 @@ public class Players {
         CompletableFuture.supplyAsync(() -> {
             try {
                 statement.executeUpdate(
-                    "CREATE TABLE IF NOT EXISTS players (id VARCHAR, uuid VARCHAR)"
-                );
+                        "CREATE TABLE IF NOT EXISTS players (id VARCHAR, uuid VARCHAR)");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -60,8 +59,7 @@ public class Players {
         CompletableFuture.supplyAsync(() -> {
             try {
                 statement.executeUpdate(
-                    String.format("INSERT INTO players (id, uuid) VALUES (%s, %s)", id, uuid)
-                );
+                        String.format("INSERT INTO players (id, uuid) VALUES (%s, %s)", id, uuid));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
