@@ -3,6 +3,7 @@ package tootymc;
 import java.io.File;
 import java.util.HashMap;
 import java.sql.Statement;
+import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.DriverManager;
@@ -33,6 +34,11 @@ public class Players {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        this.initTable();
+        this.getAndCache();
+    }
+
+    private void initTable() {
         CompletableFuture.supplyAsync(() -> {
             try {
                 statement.executeUpdate(
@@ -41,6 +47,26 @@ public class Players {
                 e.printStackTrace();
             }
             return "Database table created if not exists!";
+        }).thenAccept(result -> {
+            logger.info(result);
+            return;
+        });
+    }
+
+    private void getAndCache() {
+        CompletableFuture.supplyAsync(() -> {
+            try {
+                ResultSet rs = statement.executeQuery("SELECT * FROM players");
+                while (rs.next()) {
+                    String uuid = rs.getString("uuid");
+                    String id = rs.getString("id");
+                    this.discordToUuid.put(id, uuid);
+                    this.uuidToDiscord.put(uuid, id);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return "Database players cached in discordToUuid and uuidToDiscord";
         }).thenAccept(result -> {
             logger.info(result);
             return;
