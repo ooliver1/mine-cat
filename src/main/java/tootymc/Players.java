@@ -42,6 +42,7 @@ public class Players {
                 statement.setQueryTimeout(30);
                 statement.executeUpdate(
                         "CREATE TABLE IF NOT EXISTS players (id VARCHAR, uuid VARCHAR)");
+                statement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -64,6 +65,7 @@ public class Players {
                     this.discordToUuid.put(id, uuid);
                     this.uuidToDiscord.put(uuid, id);
                 }
+                statement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -91,6 +93,7 @@ public class Players {
                 statement.setQueryTimeout(30);
                 statement.executeUpdate(
                         String.format("INSERT INTO players (id, uuid) VALUES (%s, %s)", id, uuid));
+                statement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
