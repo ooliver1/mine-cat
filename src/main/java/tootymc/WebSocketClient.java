@@ -45,7 +45,7 @@ public class WebSocketClient {
         private Logger logger;
         private Server server;
         private File dataFolder;
-        private static final String version = "0.0.0-a19";
+        private static final String version = "0.0.0-a21";
 
         public WsClient(Tooty plugin) {
             this.plugin = plugin;
@@ -99,6 +99,7 @@ public class WebSocketClient {
                         } catch (JSONException e) {
                             logger.warning("Uuid not in payload?" + e);
                         }
+                        break;
                     }
                     case "player": {
                         try {
@@ -109,6 +110,7 @@ public class WebSocketClient {
                             logger.warning("Id or uuid not in payload?" + e);
                             e.printStackTrace();
                         }
+                        break;
                     }
                     case "msg": {
                         try {
@@ -131,6 +133,7 @@ public class WebSocketClient {
                             logger.warning("Message or id not in payload?");
                             e.printStackTrace();
                         }
+                        break;
                     }
                 }
             }

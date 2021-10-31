@@ -14,7 +14,6 @@ public class Players {
     private Logger logger;
     private File dataFolder;
     private Connection conn = null;
-    private Statement statement = null;
     private static final String databaseProtocol = "jdbc:sqlite";
     private HashMap<String, String> uuidToDiscord = new HashMap<String, String>();
     private HashMap<String, String> discordToUuid = new HashMap<String, String>();
@@ -29,8 +28,6 @@ public class Players {
         logger.info("Connecting to database with uri: " + databaseUri);
         try {
             this.conn = DriverManager.getConnection(databaseUri);
-            this.statement = conn.createStatement();
-            statement.setQueryTimeout(30);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -41,6 +38,8 @@ public class Players {
     private void initTable() {
         CompletableFuture.supplyAsync(() -> {
             try {
+                Statement statement = conn.createStatement();
+                statement.setQueryTimeout(30);
                 statement.executeUpdate(
                         "CREATE TABLE IF NOT EXISTS players (id VARCHAR, uuid VARCHAR)");
             } catch (SQLException e) {
@@ -56,6 +55,8 @@ public class Players {
     private void getAndCache() {
         CompletableFuture.supplyAsync(() -> {
             try {
+                Statement statement = conn.createStatement();
+                statement.setQueryTimeout(30);
                 ResultSet rs = statement.executeQuery("SELECT * FROM players");
                 while (rs.next()) {
                     String uuid = rs.getString("uuid");
@@ -86,6 +87,8 @@ public class Players {
         this.uuidToDiscord.put(uuid, id);
         CompletableFuture.supplyAsync(() -> {
             try {
+                Statement statement = conn.createStatement();
+                statement.setQueryTimeout(30);
                 statement.executeUpdate(
                         String.format("INSERT INTO players (id, uuid) VALUES (%s, %s)", id, uuid));
             } catch (SQLException e) {
