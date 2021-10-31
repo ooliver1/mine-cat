@@ -2,9 +2,12 @@ package tootymc;
 
 import java.net.URI;
 import java.io.File;
+import java.util.UUID;
+import org.bukkit.Server;
 import java.io.FileWriter;
 import java.io.IOException;
 import org.json.JSONObject;
+import org.bukkit.ChatColor;
 import org.json.JSONException;
 import java.net.http.WebSocket;
 import java.net.http.HttpClient;
@@ -40,12 +43,14 @@ public class WebSocketClient {
         private String uuid;
         private Tooty plugin;
         private Logger logger;
+        private Server server;
         private File dataFolder;
         private static final String version = "0.0.0-a18";
 
         public WsClient(Tooty plugin) {
             this.plugin = plugin;
             this.uuid = plugin.getUuid();
+            this.server = plugin.getServer();
             this.logger = plugin.getLogger();
             this.dataFolder = plugin.getDataFolder();
         }
@@ -102,6 +107,28 @@ public class WebSocketClient {
                             this.plugin.addPlayer(uuid.toString(), id.toString());
                         } catch (JSONException e) {
                             logger.warning("Id or uuid not in payload?" + e);
+                            e.printStackTrace();
+                        }
+                    }
+                    case "msg": {
+                        try {
+                            Object msg = res.get("msg");
+                            Object id = res.get("id");
+                            String uuid = this.plugin.getUuid(id.toString());
+                            if (uuid != null) {
+                                String playerName = this.server.getOfflinePlayer(
+                                    UUID.fromString(uuid)).getName()
+                                this.server.broadcastMessage(String.format(
+                                        "<%s> %s", playerName, msg.toString()));
+                            } else {
+                                Object playerName = res.get("name");
+                                this.server.broadcastMessage(String.format(
+                                        "<%s%2> %s%s", ChatColor.BLUE,
+                                        playerName.toString(),
+                                        ChatColor.RESET, msg.toString()));
+                            }
+                        } catch (JSONException e) {
+                            logger.warning("Message or id not in payload?");
                             e.printStackTrace();
                         }
                     }

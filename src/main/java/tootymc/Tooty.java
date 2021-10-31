@@ -36,6 +36,10 @@ public class Tooty extends JavaPlugin {
         return this.players.getDiscordId(uuid);
     }
 
+    public String getUuid(String id) {
+        return this.players.getUuid(id);
+    }
+
     @Override
     public void onDisable() {
         logger.info("Tooty is disabling...");
