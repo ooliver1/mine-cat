@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.DriverManager;
 import java.util.logging.Logger;
+import java.sql.PreparedStatement;
 import java.util.concurrent.CompletableFuture;
 
 public class Players {
@@ -37,12 +38,9 @@ public class Players {
 
     private void initTable() {
         CompletableFuture.supplyAsync(() -> {
-            try {
-                Statement statement = conn.createStatement();
-                statement.setQueryTimeout(30);
+            try (Statement statement = conn.createStatement()) {
                 statement.executeUpdate(
                         "CREATE TABLE IF NOT EXISTS players (id VARCHAR, uuid VARCHAR)");
-                statement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -55,9 +53,7 @@ public class Players {
 
     private void getAndCache() {
         CompletableFuture.supplyAsync(() -> {
-            try {
-                Statement statement = conn.createStatement();
-                statement.setQueryTimeout(30);
+            try (Statement statement = conn.createStatement()) {
                 ResultSet rs = statement.executeQuery("SELECT * FROM players");
                 while (rs.next()) {
                     String uuid = rs.getString("uuid");
@@ -65,7 +61,6 @@ public class Players {
                     this.discordToUuid.put(id, uuid);
                     this.uuidToDiscord.put(uuid, id);
                 }
-                statement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -88,16 +83,17 @@ public class Players {
         this.discordToUuid.put(id, uuid);
         this.uuidToDiscord.put(uuid, id);
         CompletableFuture.supplyAsync(() -> {
-            try {
-                Statement statement = conn.createStatement();
-                statement.setQueryTimeout(30);
-                statement.executeUpdate(
-                        String.format("INSERT INTO players (id, uuid) VALUES (%s, %s)", id, uuid));
-                statement.close();
+            try (
+                PreparedStatement statement = conn.prepareStatement(
+                    "INSERT INTO players (uuid, id) VALUES (?,?)")) {
+                statement.setString(1, uuid);
+                statement.setString(2, id);
+                statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return String.format("Player with id %s and uuid %s added to database!");
+            return String.format(
+                "Player with id %s and uuid %s added to database!", id, uuid);
         }).thenAccept(result -> {
             logger.info(result);
             return;
