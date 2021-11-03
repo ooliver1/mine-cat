@@ -45,7 +45,7 @@ public class WebSocketClient {
         private Logger logger;
         private Server server;
         private File dataFolder;
-        private static final String version = "0.0.0-a22";
+        private static final String version = "0.0.0-a23";
 
         public WsClient(Tooty plugin) {
             this.plugin = plugin;
@@ -117,6 +117,7 @@ public class WebSocketClient {
                             Object msg = res.get("msg");
                             Object id = res.get("id");
                             String uuid = this.plugin.getUuid(id.toString());
+                            logger.info(String.format("Id of %s has uuid %s", id, uuid));
                             if (uuid != null) {
                                 String playerName = this.server.getOfflinePlayer(
                                         UUID.fromString(uuid)).getName();
