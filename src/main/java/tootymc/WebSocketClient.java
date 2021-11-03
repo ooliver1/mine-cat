@@ -118,7 +118,7 @@ public class WebSocketClient {
                             Object id = res.get("id");
                             String uuid = this.plugin.getUuid(id.toString());
                             logger.info(String.format("Id of %s has uuid %s", id, uuid));
-                            if (uuid != null) {
+                            if (uuid != null && uuid.toString() != "null") {
                                 String playerName = this.server.getOfflinePlayer(
                                         UUID.fromString(uuid)).getName();
                                 this.server.broadcastMessage(String.format(
