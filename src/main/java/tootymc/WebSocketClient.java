@@ -7,7 +7,6 @@ import org.bukkit.Server;
 import java.io.FileWriter;
 import java.io.IOException;
 import org.json.JSONObject;
-import org.bukkit.ChatColor;
 import org.json.JSONException;
 import java.net.http.WebSocket;
 import java.net.http.HttpClient;
@@ -45,7 +44,7 @@ public class WebSocketClient {
         private Logger logger;
         private Server server;
         private File dataFolder;
-        private static final String version = "0.0.0-a23";
+        private static final String version = "0.0.0-a24";
 
         public WsClient(Tooty plugin) {
             this.plugin = plugin;
@@ -126,9 +125,7 @@ public class WebSocketClient {
                             } else {
                                 Object playerName = res.get("name");
                                 this.server.broadcastMessage(String.format(
-                                        "<%s%2> %s%s", ChatColor.BLUE,
-                                        playerName.toString(),
-                                        ChatColor.RESET, msg.toString()));
+                                        "<&9%2&r> %s", playerName, msg.toString()));
                             }
                         } catch (JSONException e) {
                             logger.warning("Message or id not in payload?");
