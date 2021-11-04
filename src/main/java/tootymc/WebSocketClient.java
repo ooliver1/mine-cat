@@ -44,7 +44,7 @@ public class WebSocketClient {
         private Logger logger;
         private Server server;
         private File dataFolder;
-        private static final String version = "0.0.0-a24";
+        private static final String version = "0.0.0-a25";
 
         public WsClient(Tooty plugin) {
             this.plugin = plugin;
@@ -123,9 +123,11 @@ public class WebSocketClient {
                                 this.server.broadcastMessage(String.format(
                                         "<%s> %s", playerName, msg.toString()));
                             } else {
-                                Object playerName = res.get("name");
+                                String playerName = res.get("name").toString();
+                                logger.info(String.format(
+                                        "<&9%s&r> %s", playerName, msg.toString()));
                                 this.server.broadcastMessage(String.format(
-                                        "<&9%2&r> %s", playerName, msg.toString()));
+                                        "<&9%s&r> %s", playerName, msg.toString()));
                             }
                         } catch (JSONException e) {
                             logger.warning("Message or id not in payload?");
