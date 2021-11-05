@@ -7,6 +7,7 @@ import org.bukkit.Server;
 import java.io.FileWriter;
 import java.io.IOException;
 import org.json.JSONObject;
+import org.bukkit.ChatColor;
 import org.json.JSONException;
 import java.net.http.WebSocket;
 import java.net.http.HttpClient;
@@ -44,7 +45,7 @@ public class WebSocketClient {
         private Logger logger;
         private Server server;
         private File dataFolder;
-        private static final String version = "0.0.0-a25";
+        private static final String version = "0.0.0-a26";
 
         public WsClient(Tooty plugin) {
             this.plugin = plugin;
@@ -116,7 +117,6 @@ public class WebSocketClient {
                             Object msg = res.get("msg");
                             Object id = res.get("id");
                             String uuid = this.plugin.getUuid(id.toString());
-                            logger.info(String.format("Id of %s has uuid %s", id, uuid));
                             if (uuid != null && uuid.toString() != "null") {
                                 String playerName = this.server.getOfflinePlayer(
                                         UUID.fromString(uuid)).getName();
@@ -125,9 +125,11 @@ public class WebSocketClient {
                             } else {
                                 String playerName = res.get("name").toString();
                                 logger.info(String.format(
-                                        "<&9%s&r> %s", playerName, msg.toString()));
+                                        "<%s%s%s> %s", ChatColor.BLUE,
+                                        playerName, ChatColor.RESET, msg.toString()));
                                 this.server.broadcastMessage(String.format(
-                                        "<&9%s&r> %s", playerName, msg.toString()));
+                                        "<%s%s%s> %s", ChatColor.BLUE,
+                                        playerName, ChatColor.RESET, msg.toString()));
                             }
                         } catch (JSONException e) {
                             logger.warning("Message or id not in payload?");
