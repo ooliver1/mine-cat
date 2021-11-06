@@ -71,74 +71,78 @@ public class WebSocketClient {
             logger.info("Method onText() got data: " + data);
             JSONObject res = new JSONObject(data.toString());
             Object type = res.get("type");
-            if (type instanceof String) {
-                String reqType = (String) type;
-                switch (reqType) {
-                    case "login": {
-                        try {
-                            Object uuid = res.get("uuid");
-                            if (uuid != null && uuid != "null" && uuid.toString() != "null") {
-                                try {
-                                    if (!dataFolder.exists()) {
-                                        dataFolder.mkdir();
+            try {
+                if (type instanceof String) {
+                    String reqType = (String) type;
+                    switch (reqType) {
+                        case "login": {
+                            try {
+                                Object uuid = res.get("uuid");
+                                if (uuid != null && uuid != "null" && uuid.toString() != "null") {
+                                    try {
+                                        if (!dataFolder.exists()) {
+                                            dataFolder.mkdir();
+                                        }
+                                        File myObj = new File(dataFolder, "uuid.txt");
+                                        myObj.createNewFile();
+                                        FileWriter myWriter =
+                                                new FileWriter(dataFolder.getPath() + "/" + "uuid.txt");
+                                        myWriter.write(uuid.toString());
+                                        myWriter.close();
+                                        logger.info("Your uuid is in TootyMC/uuid.txt");
+                                    } catch (IOException e) {
+                                        logger.warning("An error occurred.");
+                                        e.printStackTrace();
                                     }
-                                    File myObj = new File(dataFolder, "uuid.txt");
-                                    myObj.createNewFile();
-                                    FileWriter myWriter =
-                                            new FileWriter(dataFolder.getPath() + "/" + "uuid.txt");
-                                    myWriter.write(uuid.toString());
-                                    myWriter.close();
-                                    logger.info("Your uuid is in TootyMC/uuid.txt");
-                                } catch (IOException e) {
-                                    logger.warning("An error occurred.");
-                                    e.printStackTrace();
+                                } else {
+                                    logger.info("Logged in successfully!");
                                 }
-                            } else {
-                                logger.info("Logged in successfully!");
+                            } catch (JSONException e) {
+                                logger.warning("Uuid not in payload?" + e);
                             }
-                        } catch (JSONException e) {
-                            logger.warning("Uuid not in payload?" + e);
+                            break;
                         }
-                        break;
-                    }
-                    case "player": {
-                        try {
-                            Object id = res.get("id");
-                            Object uuid = res.get("uuid");
-                            this.plugin.addPlayer(uuid.toString(), id.toString());
-                        } catch (JSONException e) {
-                            logger.warning("Id or uuid not in payload?" + e);
-                            e.printStackTrace();
-                        }
-                        break;
-                    }
-                    case "msg": {
-                        try {
-                            Object msg = res.get("msg");
-                            Object id = res.get("id");
-                            String uuid = this.plugin.getUuid(id.toString());
-                            if (uuid != null && uuid.toString() != "null") {
-                                String playerName = this.server.getOfflinePlayer(
-                                        UUID.fromString(uuid)).getName();
-                                this.server.broadcastMessage(String.format(
-                                        "<%s> %s", playerName, msg.toString()));
-                            } else {
-                                String playerName = res.get("name").toString();
-                                logger.info(String.format(
-                                        "<%s%s%s> %s", ChatColor.BLUE,
-                                        playerName, ChatColor.RESET, msg.toString()));
-                                this.server.broadcastMessage(String.format(
-                                        "<%s%s%s> %s", ChatColor.BLUE,
-                                        playerName, ChatColor.RESET, msg.toString()));
+                        case "player": {
+                            try {
+                                Object id = res.get("id");
+                                Object uuid = res.get("uuid");
+                                this.plugin.addPlayer(uuid.toString(), id.toString());
+                            } catch (JSONException e) {
+                                logger.warning("Id or uuid not in payload?" + e);
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            logger.warning("Message or id not in payload?");
-                            e.printStackTrace();
+                            break;
                         }
-                        break;
+                        case "msg": {
+                            try {
+                                Object msg = res.get("msg");
+                                Object id = res.get("id");
+                                String uuid = this.plugin.getUuid(id.toString());
+                                if (uuid != null && uuid.toString() != "null") {
+                                    String playerName = this.server.getOfflinePlayer(
+                                            UUID.fromString(uuid)).getName();
+                                    this.server.broadcastMessage(String.format(
+                                            "<%s> %s", playerName, msg.toString()));
+                                } else {
+                                    String playerName = res.get("name").toString();
+                                    logger.info(String.format(
+                                            "<%s%s%s> %s", ChatColor.BLUE,
+                                            playerName, ChatColor.RESET, msg.toString()));
+                                    this.server.broadcastMessage(String.format(
+                                            "<%s%s%s> %s", ChatColor.BLUE,
+                                            playerName, ChatColor.RESET, msg.toString()));
+                                }
+                            } catch (JSONException e) {
+                                logger.warning("Message or id not in payload?");
+                                e.printStackTrace();
+                            }
+                            break;
+                        }
                     }
                 }
-            }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } 
             return Listener.super.onText(webSocket, data, last);
         }
 
