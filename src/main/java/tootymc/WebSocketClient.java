@@ -45,7 +45,7 @@ public class WebSocketClient {
         private Logger logger;
         private Server server;
         private File dataFolder;
-        private static final String version = "0.0.0-a26";
+        private static final String version = "0.0.0-a27";
 
         public WsClient(Tooty plugin) {
             this.plugin = plugin;
@@ -86,7 +86,8 @@ public class WebSocketClient {
                                         File myObj = new File(dataFolder, "uuid.txt");
                                         myObj.createNewFile();
                                         FileWriter myWriter =
-                                                new FileWriter(dataFolder.getPath() + "/" + "uuid.txt");
+                                                new FileWriter(
+                                                        dataFolder.getPath() + "/" + "uuid.txt");
                                         myWriter.write(uuid.toString());
                                         myWriter.close();
                                         logger.info("Your uuid is in TootyMC/uuid.txt");
@@ -142,7 +143,7 @@ public class WebSocketClient {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-            } 
+            }
             return Listener.super.onText(webSocket, data, last);
         }
 
