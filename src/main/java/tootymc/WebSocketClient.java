@@ -75,7 +75,7 @@ public class WebSocketClient {
             } catch (JSONException e) {
                 logger.warning("Failed to parse JSON." + e);
                 JSONObject req = new JSONObject();
-                req.put("type", "exc")
+                req.put("type", "exc");
                 req.put("msg", e.getMessage());
                 req.put("exc", e.getClass().getName());
                 webSocket.sendText(req.toString(), true);
