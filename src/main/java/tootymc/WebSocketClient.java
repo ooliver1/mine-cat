@@ -71,7 +71,6 @@ public class WebSocketClient {
             logger.info("Method onText() got data: " + data);
             JSONObject res = new JSONObject(data.toString());
             Object type = res.get("type");
-            try {
                 if (type instanceof String) {
                     String reqType = (String) type;
                     switch (reqType) {
@@ -141,9 +140,6 @@ public class WebSocketClient {
                         }
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             return Listener.super.onText(webSocket, data, last);
         }
 
