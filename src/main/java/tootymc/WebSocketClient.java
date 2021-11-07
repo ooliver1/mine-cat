@@ -69,77 +69,120 @@ public class WebSocketClient {
         @Override
         public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
             logger.info("Method onText() got data: " + data);
-            JSONObject res = new JSONObject(data.toString());
-            Object type = res.get("type");
-                if (type instanceof String) {
-                    String reqType = (String) type;
-                    switch (reqType) {
-                        case "login": {
-                            try {
-                                Object uuid = res.get("uuid");
-                                if (uuid != null && uuid != "null" && uuid.toString() != "null") {
-                                    try {
-                                        if (!dataFolder.exists()) {
-                                            dataFolder.mkdir();
-                                        }
-                                        File myObj = new File(dataFolder, "uuid.txt");
-                                        myObj.createNewFile();
-                                        FileWriter myWriter =
-                                                new FileWriter(
-                                                        dataFolder.getPath() + "/" + "uuid.txt");
-                                        myWriter.write(uuid.toString());
-                                        myWriter.close();
-                                        logger.info("Your uuid is in TootyMC/uuid.txt");
-                                    } catch (IOException e) {
-                                        logger.warning("An error occurred.");
-                                        e.printStackTrace();
+            JSONObject res = null;
+            try {
+                res = new JSONObject(data.toString());
+            } catch (JSONException e) {
+                logger.warning("Failed to parse JSON." + e);
+                JSONObject req = new JSONObject();
+                req.put("type", "exc")
+                req.put("msg", e.getMessage());
+                req.put("exc", e.getClass().getName());
+                webSocket.sendText(req.toString(), true);
+                return Listener.super.onText(webSocket, data, last);
+            }
+            Object type = null;
+            try {
+                type = res.get("type");
+            } catch (JSONException e) {
+                logger.warning("No type found in JSON" + e);
+                JSONObject req = new JSONObject();
+                req.put("type", "exc");
+                req.put("msg", e.getMessage());
+                req.put("exc", e.getClass().getName());
+                webSocket.sendText(req.toString(), true);
+                return Listener.super.onText(webSocket, data, last);
+            }
+            if (type instanceof String) {
+                String reqType = (String) type;
+                switch (reqType) {
+                    case "login": {
+                        try {
+                            Object uuid = res.get("uuid");
+                            if (uuid != null && uuid != "null" && uuid.toString() != "null") {
+                                try {
+                                    if (!dataFolder.exists()) {
+                                        dataFolder.mkdir();
                                     }
-                                } else {
-                                    logger.info("Logged in successfully!");
+                                    File myObj = new File(dataFolder, "uuid.txt");
+                                    myObj.createNewFile();
+                                    FileWriter myWriter =
+                                            new FileWriter(
+                                                    dataFolder.getPath() + "/" + "uuid.txt");
+                                    myWriter.write(uuid.toString());
+                                    myWriter.close();
+                                    logger.info("Your uuid is in TootyMC/uuid.txt");
+                                } catch (IOException e) {
+                                    logger.warning("IOException when getting uuid" + e);
+                                    JSONObject req = new JSONObject();
+                                    req.put("type", "exc");
+                                    req.put("msg", e.getMessage());
+                                    req.put("exc", e.getClass().getName());
+                                    webSocket.sendText(req.toString(), true);
+                                    return Listener.super.onText(webSocket, data, last);
                                 }
-                            } catch (JSONException e) {
-                                logger.warning("Uuid not in payload?" + e);
+                            } else {
+                                logger.info("Logged in successfully!");
                             }
-                            break;
+                        } catch (JSONException e) {
+                            logger.warning("Uuid not found in JSON" + e);
+                            JSONObject req = new JSONObject();
+                            req.put("type", "exc");
+                            req.put("msg", e.getMessage());
+                            req.put("exc", e.getClass().getName());
+                            webSocket.sendText(req.toString(), true);
+                            return Listener.super.onText(webSocket, data, last);
                         }
-                        case "player": {
-                            try {
-                                Object id = res.get("id");
-                                Object uuid = res.get("uuid");
-                                this.plugin.addPlayer(uuid.toString(), id.toString());
-                            } catch (JSONException e) {
-                                logger.warning("Id or uuid not in payload?" + e);
-                                e.printStackTrace();
+                        break;
+                    }
+                    case "player": {
+                        try {
+                            Object id = res.get("id");
+                            Object uuid = res.get("uuid");
+                            this.plugin.addPlayer(uuid.toString(), id.toString());
+                        } catch (JSONException e) {
+                            logger.warning("Id or uuid not found in JSON" + e);
+                            JSONObject req = new JSONObject();
+                            req.put("type", "exc");
+                            req.put("msg", e.getMessage());
+                            req.put("exc", e.getClass().getName());
+                            webSocket.sendText(req.toString(), true);
+                            return Listener.super.onText(webSocket, data, last);
+                        }
+                        break;
+                    }
+                    case "msg": {
+                        try {
+                            Object msg = res.get("msg");
+                            Object id = res.get("id");
+                            String uuid = this.plugin.getUuid(id.toString());
+                            if (uuid != null && uuid.toString() != "null") {
+                                String playerName = this.server.getOfflinePlayer(
+                                        UUID.fromString(uuid)).getName();
+                                this.server.broadcastMessage(String.format(
+                                        "<%s> %s", playerName, msg.toString()));
+                            } else {
+                                String playerName = res.get("name").toString();
+                                logger.info(String.format(
+                                        "<%s%s%s> %s", ChatColor.BLUE,
+                                        playerName, ChatColor.RESET, msg.toString()));
+                                this.server.broadcastMessage(String.format(
+                                        "<%s%s%s> %s", ChatColor.BLUE,
+                                        playerName, ChatColor.RESET, msg.toString()));
                             }
-                            break;
+                        } catch (JSONException e) {
+                            logger.warning("Message, name or id not in JSON" + e);
+                            JSONObject req = new JSONObject();
+                            req.put("type", "exc");
+                            req.put("msg", e.getMessage());
+                            req.put("exc", e.getClass().getName());
+                            webSocket.sendText(req.toString(), true);
+                            return Listener.super.onText(webSocket, data, last);
                         }
-                        case "msg": {
-                            try {
-                                Object msg = res.get("msg");
-                                Object id = res.get("id");
-                                String uuid = this.plugin.getUuid(id.toString());
-                                if (uuid != null && uuid.toString() != "null") {
-                                    String playerName = this.server.getOfflinePlayer(
-                                            UUID.fromString(uuid)).getName();
-                                    this.server.broadcastMessage(String.format(
-                                            "<%s> %s", playerName, msg.toString()));
-                                } else {
-                                    String playerName = res.get("name").toString();
-                                    logger.info(String.format(
-                                            "<%s%s%s> %s", ChatColor.BLUE,
-                                            playerName, ChatColor.RESET, msg.toString()));
-                                    this.server.broadcastMessage(String.format(
-                                            "<%s%s%s> %s", ChatColor.BLUE,
-                                            playerName, ChatColor.RESET, msg.toString()));
-                                }
-                            } catch (JSONException e) {
-                                logger.warning("Message or id not in payload?");
-                                e.printStackTrace();
-                            }
-                            break;
-                        }
+                        break;
                     }
                 }
+            }
             return Listener.super.onText(webSocket, data, last);
         }
 
