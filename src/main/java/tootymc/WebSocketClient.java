@@ -73,24 +73,14 @@ public class WebSocketClient {
             try {
                 res = new JSONObject(data.toString());
             } catch (JSONException e) {
-                logger.warning("Failed to parse JSON." + e);
-                JSONObject req = new JSONObject();
-                req.put("type", "exc");
-                req.put("msg", e.getMessage());
-                req.put("exc", e.getClass().getName());
-                webSocket.sendText(req.toString(), true);
+                this.sendError(webSocket, e, "Failed to parse JSON");
                 return Listener.super.onText(webSocket, data, last);
             }
             Object type = null;
             try {
                 type = res.get("type");
             } catch (JSONException e) {
-                logger.warning("No type found in JSON" + e);
-                JSONObject req = new JSONObject();
-                req.put("type", "exc");
-                req.put("msg", e.getMessage());
-                req.put("exc", e.getClass().getName());
-                webSocket.sendText(req.toString(), true);
+                this.sendError(webSocket, e, "No type found in JSON");
                 return Listener.super.onText(webSocket, data, last);
             }
             if (type instanceof String) {
@@ -113,24 +103,14 @@ public class WebSocketClient {
                                     myWriter.close();
                                     logger.info("Your uuid is in TootyMC/uuid.txt");
                                 } catch (IOException e) {
-                                    logger.warning("IOException when getting uuid" + e);
-                                    JSONObject req = new JSONObject();
-                                    req.put("type", "exc");
-                                    req.put("msg", e.getMessage());
-                                    req.put("exc", e.getClass().getName());
-                                    webSocket.sendText(req.toString(), true);
+                                    this.sendError(webSocket, e, "IOException when getting uuid");
                                     return Listener.super.onText(webSocket, data, last);
                                 }
                             } else {
                                 logger.info("Logged in successfully!");
                             }
                         } catch (JSONException e) {
-                            logger.warning("Uuid not found in JSON" + e);
-                            JSONObject req = new JSONObject();
-                            req.put("type", "exc");
-                            req.put("msg", e.getMessage());
-                            req.put("exc", e.getClass().getName());
-                            webSocket.sendText(req.toString(), true);
+                            this.sendError(webSocket, e, "Uuid not found in JSON");
                             return Listener.super.onText(webSocket, data, last);
                         }
                         break;
@@ -141,12 +121,7 @@ public class WebSocketClient {
                             Object uuid = res.get("uuid");
                             this.plugin.addPlayer(uuid.toString(), id.toString());
                         } catch (JSONException e) {
-                            logger.warning("Id or uuid not found in JSON" + e);
-                            JSONObject req = new JSONObject();
-                            req.put("type", "exc");
-                            req.put("msg", e.getMessage());
-                            req.put("exc", e.getClass().getName());
-                            webSocket.sendText(req.toString(), true);
+                            this.sendError(webSocket, e, "Id or uuid not found in JSON");
                             return Listener.super.onText(webSocket, data, last);
                         }
                         break;
@@ -171,12 +146,7 @@ public class WebSocketClient {
                                         playerName, ChatColor.RESET, msg.toString()));
                             }
                         } catch (JSONException e) {
-                            logger.warning("Message, name or id not in JSON" + e);
-                            JSONObject req = new JSONObject();
-                            req.put("type", "exc");
-                            req.put("msg", e.getMessage());
-                            req.put("exc", e.getClass().getName());
-                            webSocket.sendText(req.toString(), true);
+                            this.sendError(webSocket, e, "Message, name or id not in JSON");
                             return Listener.super.onText(webSocket, data, last);
                         }
                         break;
@@ -191,6 +161,15 @@ public class WebSocketClient {
             logger.warning("Websocket closed with status "
                     + statusCode + ", reason: " + reason);
             return Listener.super.onClose(webSocket, statusCode, reason);
+        }
+
+        private void sendError(WebSocket webSocket, Exception e, String msg) {
+            logger.warning(msg + e);
+            JSONObject req = new JSONObject();
+            req.put("type", "exc");
+            req.put("msg", e.getMessage());
+            req.put("exc", e.getClass().getName());
+            webSocket.sendText(req.toString(), true);
         }
     }
 }
