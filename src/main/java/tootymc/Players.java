@@ -33,7 +33,6 @@ public class Players {
             e.printStackTrace();
         }
         this.initTable();
-        this.getAndCache();
     }
 
     private void initTable() {
@@ -47,6 +46,7 @@ public class Players {
             return "Database table created if not exists!";
         }).thenAccept(result -> {
             logger.info(result);
+            this.getAndCache();
             return;
         });
     }
