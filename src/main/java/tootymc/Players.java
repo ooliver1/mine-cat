@@ -40,7 +40,7 @@ public class Players {
         CompletableFuture.supplyAsync(() -> {
             try (Statement statement = conn.createStatement()) {
                 statement.executeUpdate(
-                        "CREATE TABLE IF NOT EXISTS players (id VARCHAR, uuid VARCHAR)");
+                        "CREATE TABLE IF NOT EXISTS players (id VARCHAR, uuid VARCHAR UNIQUE)");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -83,17 +83,22 @@ public class Players {
         this.discordToUuid.put(id, uuid);
         this.uuidToDiscord.put(uuid, id);
         CompletableFuture.supplyAsync(() -> {
-            try (
-                PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO players (uuid, id) VALUES (?,?)")) {
+            try {
+                String statementStr =
+                        "INSERT INTO players (uuid, id) " +
+                                "VALUES (?, ?) " +
+                                "ON CONFLICT (uuid) DO UPDATE " +
+                                "    SET id=?";
+                PreparedStatement statement = conn.prepareStatement(statementStr);
                 statement.setString(1, uuid);
                 statement.setString(2, id);
+                statement.setString(3, id);
                 statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             return String.format(
-                "Player with id %s and uuid %s added to database!", id, uuid);
+                    "Player with id %s and uuid %s added to database!", id, uuid);
         }).thenAccept(result -> {
             logger.info(result);
             return;
