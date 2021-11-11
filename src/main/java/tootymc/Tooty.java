@@ -24,6 +24,8 @@ public class Tooty extends JavaPlugin {
         this.client = wsClient.getClient();
         new MessageListener(this, this.client);
         logger.info("MessageListener is enabled!");
+        new AdvancementListener(this, this.client);
+        logger.info("AdvancementListener is enabled");
         this.players = new Players(this);
         logger.info("Players manager is enabled!");
     }
