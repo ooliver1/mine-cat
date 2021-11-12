@@ -17,6 +17,8 @@ public class Tooty extends JavaPlugin {
     @Override
     public void onEnable() {
         logger.info("Tooty is enabling...");
+        this.saveDefaultConfig();
+        logger.info("Config saved!");
         uuid = getUuid();
         logger.info("Your uuid is: '" + uuid + "'");
         WebSocketClient wsClient = new WebSocketClient(this);
@@ -25,7 +27,7 @@ public class Tooty extends JavaPlugin {
         new MessageListener(this, this.client);
         logger.info("MessageListener is enabled!");
         new AdvancementListener(this, this.client);
-        logger.info("AdvancementListener is enabled");
+        logger.info("AdvancementListener is enabled!");
         this.players = new Players(this);
         logger.info("Players manager is enabled!");
     }

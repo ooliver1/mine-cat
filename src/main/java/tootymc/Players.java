@@ -39,7 +39,7 @@ public class Players {
         CompletableFuture.supplyAsync(() -> {
             try (Statement statement = conn.createStatement()) {
                 statement.executeUpdate(
-                        "CREATE TABLE IF NOT EXISTS players (id VARCHAR, uuid VARCHAR UNIQUE)");
+                        "CREATE TABLE IF NOT EXISTS players (id VARCHAR, uuid VARCH AR UNIQUE)");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
