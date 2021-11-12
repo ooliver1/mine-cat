@@ -1,6 +1,6 @@
 main: tootymc.Tooty
 name: TootyMC
-version: 0.1.0-b3
+version: 0.1.0-b4
 author: ooliver1 - Oliver WIlkes
 api-version: 1.17
 database: true
