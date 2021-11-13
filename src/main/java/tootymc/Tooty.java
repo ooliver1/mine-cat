@@ -2,11 +2,14 @@ package tootymc;
 
 import java.io.File;
 import java.util.Scanner;
+import org.json.JSONObject;
 import java.sql.SQLException;
 import java.net.http.WebSocket;
+import org.bukkit.entity.Player;
 import java.util.logging.Logger;
 import java.io.FileNotFoundException;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.player.PlayerEvent;
 
 public class Tooty extends JavaPlugin {
     private Players players;
@@ -77,6 +80,21 @@ public class Tooty extends JavaPlugin {
                 return "unknown";
             }
             return "unknown";
+        }
+    }
+
+    public void putPlayer(PlayerEvent event, JSONObject req) {
+        Player player = event.getPlayer();
+        String uuid = player.getUniqueId().toString();
+        String id = this.getDiscordId(uuid);
+        String name = player.getDisplayName();
+        if (id != null) {
+            req.put("id", id);
+            req.put("dc", true);
+        } else {
+            req.put("id", uuid);
+            req.put("dc", false);
+            req.put("name", name);
         }
     }
 }
