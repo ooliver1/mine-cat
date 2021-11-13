@@ -1,181 +1,360 @@
 story/mine_stone:
   - Stone Age
+  - Mine stone with your new pickaxe
+  - https://cdn.tooty.xyz/advancements/stone_age
 story/upgrade_tools:
   - Getting an Upgrade
+  - Construct a better pickaxe
+  - https://cdn.tooty.xyz/advancements/getting_an_upgrade
 story/smelt_iron:
   - Acquire Hardware
+  - Smelt an iron ingot
+  - https://cdn.tooty.xyz/advancements/aquire_hardware
 story/obtain_armor:
   - Suit Up
+  - Protect yourself with a piece of iron armor
+  - https://cdn.tooty.xyz/advancements/suit_up
 story/lava_bucket:
   - Hot Stuff
+  - Fill a bucket with lava
+  - https://cdn.tooty.xyz/advancements/hot_stuff
 story/iron_tools:
   - Isn't It Iron Pick
+  - Upgrade your pickaxe
+  - https://cdn.tooty.xyz/advancements/isnt_it_iron_pick
 story/deflect_arrow:
   - Not Today, Thank You
+  - Block a projectile using your shield.
+  - https://cdn.tooty.xyz/advancements/not_today_thank_you
 story/form_obsidian:
   - Ice Bucket Challenge
+  - Obtain a block of obsidian
+  - https://cdn.tooty.xyz/advancements/ice_bucket_challenge
 story/mine_diamond:
   - Diamonds!
+  - Acquire diamonds
+  - https://cdn.tooty.xyz/advancements/diamonds
 story/enter_the_nether:
   - We Need to Go Deeper
+  - Build, light and enter a Nether Portal
+  - https://cdn.tooty.xyz/advancements/we_need_to_go_deeper
 story/shiny_gear:
   - Cover Me With Diamonds
+  - Diamond armor saves lives
+  - https://cdn.tooty.xyz/advancements/cover_me_with_diamonds
 story/enchant_item:
   - Enchanter
+  - Enchant an item at an Enchantment Table
+  - https://cdn.tooty.xyz/advancements/enchanter
 story/cure_zombie_villager:
   - Zombie Doctor
+  - Weaken and then cure a Zombie Villager
+  - https://cdn.tooty.xyz/advancements/zombie_doctor
 story/follow_ender_eye:
   - Eye Spy
+  - Follow an Ender Eye
+  - https://cdn.tooty.xyz/advancements/eye_spy
 story/enter_the_end:
   - The End?
+  - Enter the End Portal
+  - https://cdn.tooty.xyz/advancements/the_end
 nether/return_to_sender:
   - Return to Sender
+  - Destroy a Ghast with a fireball
+  - https://cdn.tooty.xyz/advancements/return_to_sender
 nether/find_bastion:
   - Those Were the Days
+  - Enter a Bastion Remnant
+  - https://cdn.tooty.xyz/advancements/those_were_the_days
 nether/obtain_ancient_debris:
   - Hidden in the Depths
+  - Obtain Ancient Debris
+  - https://cdn.tooty.xyz/advancements/hidden_in_the_depths
 nether/fast_travel:
   - Subspace Bubble
+  - Use the Nether to travel 7 km in the Overworld
+  - https://cdn.tooty.xyz/advancements/subspace_bubble
 nether/find_fortress:
   - A Terrible Fortress
+  - Break your way into a Nether Fortress
+  - https://cdn.tooty.xyz/advancements/a_terrible_fortress
 nether/obtain_crying_obsidian:
   - Who is Cutting Onions?
+  - Obtain Crying Obsidian
+  - https://cdn.tooty.xyz/advancements/who_is_cutting_onions
 nether/distract_piglin:
   - Oh Shiny
+  - Distract Piglins with gold
+  - https://cdn.tooty.xyz/advancements/oh_shiny
 nether/ride_strider:
   - This Boat Has Legs
+  - Ride a Strider with a Warped Fungus on a Stick
+  - https://cdn.tooty.xyz/advancements/this_boat_has_legs
 nether/uneasy_alliance:
   - Uneasy Alliance
+  - Rescue a Ghast from the Nether, bring it safely home to the Overworld... and then kill it
+  - https://cdn.tooty.xyz/advancements/uneasy_alliance
 nether/loot_bastion:
   - War Pigs
+  - Loot a chest in a Bastion Remnant
+  - https://cdn.tooty.xyz/advancements/war_pigs
 nether/use_lodestone:
   - Country Lode, Take Me Home
+  - Use a compass on a Lodestone
+  - https://cdn.tooty.xyz/advancements/country_lode_take_me_home
 nether/netherite_armor:
   - Cover Me in Debris
+  - Get a full suit of Netherite armor
+  - https://cdn.tooty.xyz/advancements/cover_me_in_debris
 nether/get_wither_skull:
   - Spooky Scary Skeleton
+  - Obtain a Wither Skeleton's skull
+  - https://cdn.tooty.xyz/advancements/spooky_scary_skeleton
 nether/obtain_blaze_rod:
   - Into Fire
+  - Relieve a Blaze of its rod
+  - https://cdn.tooty.xyz/advancements/into_fire
 nether/charge_respawn_anchor:
-  - Not Quite Nine Lives
+  - Not Quite "Nine" Lives
+  - Charge a Respawn Anchor to the maximum
+  - https://cdn.tooty.xyz/advancements/not_quite_nine_lives
 nether/ride_strider_in_overworld_lava:
   - Feels like home
+  - Take a Strider for a loooong ride on a lava lake in the Overworld
+  - https://cdn.tooty.xyz/advancements/feels_like_home
 nether/explore_nether:
   - Hot Tourist Destinations
+  - Explore all Nether biomes
+  - https://cdn.tooty.xyz/advancements/hot_tourist_destinations
 nether/summon_wither:
   - Withering Heights
+  - Summon the Wither
+  - https://cdn.tooty.xyz/advancements/withering_heights
 nether/brew_potion:
   - Local Brewery
+  - Brew a potion
+  - https://cdn.tooty.xyz/advancements/local_brewery
 nether/create_beacon:
   - Bring Home the Beacon
+  - Construct and place a beacon
+  - https://cdn.tooty.xyz/advancements/bring_home_the_beacon
 nether/all_potions:
   - A Furious Cocktail
+  - Have every potion effect applied at the same time
+  - https://cdn.tooty.xyz/advancements/a_furious_cocktail
 nether/create_full_beacon:
   - Beaconator
+  - Bring a beacon to full power
+  - https://cdn.tooty.xyz/advancements/beaconator
 nether/all_effects:
   - How Did We Get Here?
+  - Have every effect applied at the same time
+  - https://cdn.tooty.xyz/advancements/how_did_we_get_here
 end/kill_dragon:
   - Free the End
+  - Good luck
+  - https://cdn.tooty.xyz/advancements/free_the_end
 end/dragon_egg:
   - The Next Generation
+  - Hold the Dragon Egg
+  - https://cdn.tooty.xyz/advancements/the_next_generation
 end/enter_end_gateway:
   - Remote Getaway
+  - Escape the island
+  - https://cdn.tooty.xyz/advancements/remote_getaway
 end/respawn_dragon:
   - The End... Again...
+  - Respawn the Ender Dragon
+  - https://cdn.tooty.xyz/advancements/the_end_again
 end/dragon_breath:
   - You Need a Mint
+  - Collect dragon's breath in a glass bottle
+  - https://cdn.tooty.xyz/advancements/you_need_a_mint
 end/find_end_city:
   - The City at the End of the Game
+  - Go on in, what could happen?
+  - https://cdn.tooty.xyz/advancements/the_city_at_the_end_of_the_game
 end/elytra:
   - Sky's the Limit
+  - Find elytra
+  - https://cdn.tooty.xyz/advancements/skys_the_limit
 end/levitate:
   - Great View From Up Here
+  - Levitate up 50 blocks from the attacks of a Shulker
+  - https://cdn.tooty.xyz/advancements/great_view_from_up_here
 adventure/voluntary_exile:
   - Voluntary Exile
+  - Kill a raid captain.\nMaybe consider staying away from villages for the time being...
+  - https://cdn.tooty.xyz/advancements/voluntary_exile
 adventure/spyglass_at_parrot:
   - Is It a Bird?
+  - Look at a parrot through a spyglass
+  - https://cdn.tooty.xyz/advancements/is_it_a_bird
 adventure/kill_a_mob:
   - Monster Hunter
+  - Kill any hostile monster
+  - https://cdn.tooty.xyz/advancements/monster_hunter
 adventure/trade:
   - What a Deal!
+  - Successfully trade with a Villager
+  - https://cdn.tooty.xyz/advancements/what_a_deal
 adventure/honey_block_slide:
   - Sticky Situation
+  - Jump into a Honey Block to break your fall
+  - https://cdn.tooty.xyz/advancements/sticky_situation
 adventure/ol_betsy:
   - Ol' Betsy
+  - Shoot a crossbow
+  - https://cdn.tooty.xyz/advancements/ol_betsy
 adventure/lightning_rod_with_villager_no_fire:
   - Surge Protector
+  - Protect a villager from an undesired shock without starting a fire
+  - https://cdn.tooty.xyz/advancements/surge_protector
 adventure/fall_from_world_height:
   - Caves & Cliffs
+  - Free fall from the top of the world (build limit) to the bottom of the world and survive
+  - https://cdn.tooty.xyz/advancements/caves_and_cliffs
 adventure/walk_on_powder_snow_with_leather_boots:
   - Light as a Rabbit
+  - Walk on powder snow...without sinking in it
+  - https://cdn.tooty.xyz/advancements/light_as_a_rabbit
 adventure/sleep_in_bed:
   - Sweet Dreams
+  - Sleep in a bed to change your respawn point
+  - https://cdn.tooty.xyz/advancements/sweet_dreams
 adventure/hero_of_the_village:
   - Hero of the Village
+  - Successfully defend a village from a raid
+  - https://cdn.tooty.xyz/advancements/hero_of_the_village
 adventure/spyglass_at_ghast:
   - Is It a Balloon?
+  - Look at a ghast through a spyglass
+  - https://cdn.tooty.xyz/advancements/is_it_a_balloon
 adventure/throw_trident:
   - A Throwaway Joke
+  - "Throw a trident at something.\nNote: Throwing away your only weapon is not a good idea."
+  - https://cdn.tooty.xyz/advancements/a_throwaway_joke
 adventure/shoot_arrow:
   - Take Aim
+  - Shoot something with an arrow
+  - https://cdn.tooty.xyz/advancements/take_aim
 adventure/kill_all_mobs:
   - Monsters Hunted
+  - Kill one of every hostile monster
+  - https://cdn.tooty.xyz/advancements/monsters_hunted
 adventure/totem_of_undying:
   - Postmortal
+  - Use a Totem of Undying to cheat death
+  - https://cdn.tooty.xyz/advancements/postmortal
 adventure/summon_iron_golem:
   - Hired Help
+  - Summon an Iron Golem to help defend a village
+  - https://cdn.tooty.xyz/advancements/hired_help
 adventure/trade_at_world_height:
   - Star Trader
+  - Trade with a villager at the build height limit
+  - https://cdn.tooty.xyz/advancements/star_trader
 adventure/two_birds_one_arrow:
   - Two Birds, One Arrow
+  - Kill two Phantoms with a piercing arrow
+  - https://cdn.tooty.xyz/advancements/two_birds_one_arrow
 adventure/whos_the_pillager_now:
   - Who's the Pillager Now?
+  - Give a Pillager a taste of their own medicine
+  - https://cdn.tooty.xyz/advancements/whos_the_pillager_now
 adventure/arbalistic:
   - Arbalistic
+  - Kill five unique mobs with one crossbow shot
+  - https://cdn.tooty.xyz/advancements/arbalistic
 adventure/adventuring_time:
   - Adventuring Time
+  - Discover every biome
+  - https://cdn.tooty.xyz/advancements/adventuring_time
 adventure/play_jukebox_in_meadows:
   - Sound of Music
+  - Make the Meadows come alive with the sound of music from a jukebox
+  - https://cdn.tooty.xyz/advancements/sound_of_music
 adventure/spyglass_at_dragon:
   - Is It a Plane?
+  - Look at the Ender Dragon through a spyglass
+  - https://cdn.tooty.xyz/advancements/is_it_a_plane
 adventure/very_very_frightening:
   - Very Very Frightening
+  - Strike a Villager with lightning
+  - https://cdn.tooty.xyz/advancements/very_very_frightening
 adventure/sniper_duel:
   - Sniper Duel
+  - Kill a Skeleton from at least 50 meters away
+  - https://cdn.tooty.xyz/advancements/sniper_duel
 adventure/bullseye:
   - Bullseye
+  - Hit the bullseye of a Target block from at least 30 meters away
+  - https://cdn.tooty.xyz/advancements/bullseye
 husbandry/safely_harvest_honey:
   - Bee Our Guest
+  - Use a Campfire to collect Honey from a Beehive using a Bottle without aggravating the bees
+  - https://cdn.tooty.xyz/advancements/bee_our_guest
 husbandry/breed_an_animal:
   - The Parrots and the Bats
+  - Breed two animals together
+  - https://cdn.tooty.xyz/advancements/the_parrot_and_the_bats
 husbandry/ride_a_boat_with_a_goat:
   - Whatever Floats Your Goat!
+  - Get in a Boat and float with a Goat
+  - https://cdn.tooty.xyz/advancements/whatever_floats_your_goat
 husbandry/tame_an_animal:
   - Best Friends Forever
+  - Tame an animal
+  - https://cdn.tooty.xyz/advancements/best_friends_forever
 husbandry/make_a_sign_glow:
   - Glow and Behold!
+  - Make the text of a sign glow
+  - https://cdn.tooty.xyz/advancements/glow_and_behold
 husbandry/fishy_business:
   - Fishy Business
+  - Catch a fish
+  - https://cdn.tooty.xyz/advancements/fishy_business
 husbandry/silk_touch_nest:
   - Total Beelocation
+  - Move a Bee Nest, with 3 bees inside, using Silk Touch
+  - https://cdn.tooty.xyz/advancements/total_beelocation
 husbandry/plant_seed:
   - A Seedy Place
+  - Plant a seed and watch it grow
+  - https://cdn.tooty.xyz/advancements/a_seedy_place
 husbandry/wax_on:
   - Wax On
+  - Apply Honeycomb to a Copper block!
+  - https://cdn.tooty.xyz/advancements/wax_on
 husbandry/bred_all_animals:
   - Two by Two
+  - Breed all the animals!
+  - https://cdn.tooty.xyz/advancements/two_by_two
 husbandry/complete_catalogue:
   - A Complete Catalogue
+  - Tame all cat variants!
+  - https://cdn.tooty.xyz/advancements/a_complete_catalogue
 husbandry/tactical_fishing:
   - Tactical Fishing
+  - Catch a fish... without a fishing rod!
+  - https://cdn.tooty.xyz/advancements/tactical_fishing
 husbandry/balanced_diet:
   - A Balanced Diet
+  - Eat everything that is edible, even if it's not good for you
+  - https://cdn.tooty.xyz/advancements/a_balanced_diet
 husbandry/obtain_netherite_hoe:
   - Serious Dedication
+  - Use a Netherite ingot to upgrade a hoe, and then reevaluate your life choices
+  - https://cdn.tooty.xyz/advancements/serous_dedication
 husbandry/wax_off:
   - Wax Off
+  - Scrape Wax off of a Copper block!
+  - https://cdn.tooty.xyz/advancements/wax_off
 husbandry/axolotl_in_a_bucket:
   - The Cutest Predator
+  - Catch an axolotl in a bucket
+  - https://cdn.tooty.xyz/advancements/the_cutest_predator
 husbandry/kill_axolotl_target:
   - The Healing Power of Friendship!
-  - 
+  - Team up with an axolotl and win a fight
+  - https://cdn.tooty.xyz/advancements/the_healing_power_of_friendship

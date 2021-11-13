@@ -32,6 +32,7 @@ public class AdvancementListener implements Listener {
         String key = event.getAdvancement().getKey().getKey();
         String title = getTitle(key);
         String url = getUrl(key);
+        String desc = getDesc(key);
         logger.info(key);
         if (title == null) {
             return;
@@ -40,6 +41,7 @@ public class AdvancementListener implements Listener {
         req.put("type", "adv");
         req.put("adv", title);
         req.put("url", url);
+        req.put("desc", desc);
         this.plugin.putPlayer(event, req);
         client.sendText(req.toString(), true);
     }
@@ -48,7 +50,11 @@ public class AdvancementListener implements Listener {
         return this.plugin.getConfig().getStringList(raw).get(0);
     }
 
-    private String getUrl(String raw) {
+    private String getDesc(String raw) {
         return this.plugin.getConfig().getStringList(raw).get(1);
+    }
+
+    private String getUrl(String raw) {
+        return this.plugin.getConfig().getStringList(raw).get(2);
     }
 }
