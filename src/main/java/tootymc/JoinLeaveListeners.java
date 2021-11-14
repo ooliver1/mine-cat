@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLeaveEvent;
+import org.bukkit.event.player.PlayerQuitevent;
 
 public class JoinLeaveListeners implements Listener {
     private Tooty plugin;
@@ -30,7 +30,7 @@ public class JoinLeaveListeners implements Listener {
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerLeaveEvent event) {
+    public void onPlayerJoin(PlayerQuitEvent event) {
         sendWs("leave", event);
     }
 
@@ -41,3 +41,4 @@ public class JoinLeaveListeners implements Listener {
         client.sendText(req.toString(), true);
         logger.info("Player" + type);
     }
+}
