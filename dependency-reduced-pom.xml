@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tootymc</groupId>
   <artifactId>Tooty</artifactId>
-  <version>0.1.0-b5</version>
+  <version>0.2.0-b</version>
   <build>
     <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
     <resources>

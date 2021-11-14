@@ -30,10 +30,16 @@ public class AdvancementListener implements Listener {
             return;
         }
         String key = event.getAdvancement().getKey().getKey();
-        String title = getTitle(key);
-        String url = getUrl(key);
-        String desc = getDesc(key);
-        logger.info(key);
+        String title = null;
+        String url = null;
+        String desc = null;
+        try {
+            title = getTitle(key);
+            url = getUrl(key);
+            desc = getDesc(key);
+        } catch (IndexOutOfBoundsException e) {
+            return;
+        }
         if (title == null) {
             return;
         }
@@ -44,17 +50,18 @@ public class AdvancementListener implements Listener {
         req.put("desc", desc);
         this.plugin.putPlayer(event, req);
         client.sendText(req.toString(), true);
+        logger.info(title);
     }
 
-    private String getTitle(String raw) {
+    private String getTitle(String raw) throws IndexOutOfBoundsException {
         return this.plugin.getConfig().getStringList(raw).get(0);
     }
 
-    private String getDesc(String raw) {
+    private String getDesc(String raw) throws IndexOutOfBoundsException {
         return this.plugin.getConfig().getStringList(raw).get(1);
     }
 
-    private String getUrl(String raw) {
+    private String getUrl(String raw) throws IndexOutOfBoundsException {
         return this.plugin.getConfig().getStringList(raw).get(2);
     }
 }
