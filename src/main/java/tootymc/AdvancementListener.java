@@ -37,7 +37,8 @@ public class AdvancementListener implements Listener {
             title = getTitle(key);
             url = getUrl(key);
             desc = getDesc(key);
-        } catch (IndexOutOfBoundsException e) {
+        }
+        catch (IndexOutOfBoundsException e) {
             return;
         }
         if (title == null) {

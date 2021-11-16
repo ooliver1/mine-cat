@@ -31,6 +31,8 @@ public class Tooty extends JavaPlugin {
         logger.info("MessageListener is enabled!");
         new AdvancementListener(this, this.client);
         logger.info("AdvancementListener is enabled!");
+        new JoinLeaveListeners(this, this.client);
+        logger.info("JoinLeaveListeners is enabled!");
         this.players = new Players(this);
         logger.info("Players manager is enabled!");
     }
@@ -52,13 +54,15 @@ public class Tooty extends JavaPlugin {
         logger.info("Tooty is disabling...");
         try {
             client.sendClose(1000, "shutting down mc server...");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             logger.warning("Cannot close as client is null ;(");
         }
         logger.info("Websocket closed with status 1000 as the plugin is disabled");
         try {
             players.close();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -66,7 +70,8 @@ public class Tooty extends JavaPlugin {
     public String getUuid() {
         if (this.uuid != null) {
             return this.uuid;
-        } else {
+        }
+        else {
             try {
                 File file = new File(this.getDataFolder().getPath() + "/" + "uuid.txt");
                 Scanner myReader = new Scanner(file);
@@ -76,7 +81,8 @@ public class Tooty extends JavaPlugin {
                     return data;
                 }
                 myReader.close();
-            } catch (FileNotFoundException e) {
+            }
+            catch (FileNotFoundException e) {
                 return "unknown";
             }
             return "unknown";
@@ -91,7 +97,8 @@ public class Tooty extends JavaPlugin {
         if (id != null) {
             req.put("id", id);
             req.put("dc", true);
-        } else {
+        }
+        else {
             req.put("id", uuid);
             req.put("dc", false);
             req.put("name", name);

@@ -30,7 +30,8 @@ public class WebSocketClient {
                     .join();
             logger.info("The WebSocket was created and ran asynchronously.");
             this.webSocket = webSocket;
-        } catch (CompletionException e) {
+        }
+        catch (CompletionException e) {
             logger.warning("Failed to connect to tooty ;(");
         }
     }
@@ -45,7 +46,7 @@ public class WebSocketClient {
         private Logger logger;
         private Server server;
         private File dataFolder;
-        private static final String version = "0.3.0-b";
+        private static final String version = "0.3.0-b2";
 
         public WsClient(Tooty plugin) {
             this.plugin = plugin;
@@ -72,14 +73,16 @@ public class WebSocketClient {
             JSONObject res = null;
             try {
                 res = new JSONObject(data.toString());
-            } catch (JSONException e) {
+            }
+            catch (JSONException e) {
                 this.sendError(webSocket, e, "Failed to parse JSON");
                 return Listener.super.onText(webSocket, data, last);
             }
             Object type = null;
             try {
                 type = res.get("type");
-            } catch (JSONException e) {
+            }
+            catch (JSONException e) {
                 this.sendError(webSocket, e, "No type found in JSON");
                 return Listener.super.onText(webSocket, data, last);
             }
@@ -102,14 +105,17 @@ public class WebSocketClient {
                                     myWriter.write(uuid.toString());
                                     myWriter.close();
                                     logger.info("Your uuid is in TootyMC/uuid.txt");
-                                } catch (IOException e) {
+                                }
+                                catch (IOException e) {
                                     this.sendError(webSocket, e, "IOException when getting uuid");
                                     return Listener.super.onText(webSocket, data, last);
                                 }
-                            } else {
+                            }
+                            else {
                                 logger.info("Logged in successfully!");
                             }
-                        } catch (JSONException e) {
+                        }
+                        catch (JSONException e) {
                             this.sendError(webSocket, e, "Uuid not found in JSON");
                             return Listener.super.onText(webSocket, data, last);
                         }
@@ -120,7 +126,8 @@ public class WebSocketClient {
                             Object id = res.get("id");
                             Object uuid = res.get("uuid");
                             this.plugin.addPlayer(uuid.toString(), id.toString());
-                        } catch (JSONException e) {
+                        }
+                        catch (JSONException e) {
                             this.sendError(webSocket, e, "Id or uuid not found in JSON");
                             return Listener.super.onText(webSocket, data, last);
                         }
@@ -136,7 +143,8 @@ public class WebSocketClient {
                                         UUID.fromString(uuid)).getName();
                                 this.server.broadcastMessage(String.format(
                                         "<%s> %s", playerName, msg.toString()));
-                            } else {
+                            }
+                            else {
                                 String playerName = res.get("name").toString();
                                 logger.info(String.format(
                                         "<%s%s%s> %s", ChatColor.BLUE,
@@ -145,7 +153,8 @@ public class WebSocketClient {
                                         "<%s%s%s> %s", ChatColor.BLUE,
                                         playerName, ChatColor.RESET, msg.toString()));
                             }
-                        } catch (JSONException e) {
+                        }
+                        catch (JSONException e) {
                             this.sendError(webSocket, e, "Message, name or id not in JSON");
                             return Listener.super.onText(webSocket, data, last);
                         }

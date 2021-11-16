@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitevent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class JoinLeaveListeners implements Listener {
     private Tooty plugin;
