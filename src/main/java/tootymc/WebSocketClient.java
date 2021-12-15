@@ -25,7 +25,7 @@ public class WebSocketClient {
         HttpClient httpClient = HttpClient.newHttpClient();
         try {
             WebSocket webSocket = httpClient.newWebSocketBuilder()
-                    .buildAsync(URI.create("ws://65.21.247.55:6969"),
+                    .buildAsync(URI.create("ws://tooty.xyz/ws"),
                             new WsClient(plugin))
                     .join();
             logger.info("The WebSocket was created and ran asynchronously.");
@@ -42,14 +42,12 @@ public class WebSocketClient {
 
     private static class WsClient implements WebSocket.Listener {
         private String uuid;
-        private Tooty plugin;
         private Logger logger;
         private Server server;
         private File dataFolder;
-        private static final String version = "0.3.0-b2";
+        private static final String version = "0.4.0-b";
 
         public WsClient(Tooty plugin) {
-            this.plugin = plugin;
             this.uuid = plugin.getUuid();
             this.server = plugin.getServer();
             this.logger = plugin.getLogger();
@@ -121,26 +119,13 @@ public class WebSocketClient {
                         }
                         break;
                     }
-                    case "player": {
-                        try {
-                            Object id = res.get("id");
-                            Object uuid = res.get("uuid");
-                            this.plugin.addPlayer(uuid.toString(), id.toString());
-                        }
-                        catch (JSONException e) {
-                            this.sendError(webSocket, e, "Id or uuid not found in JSON");
-                            return Listener.super.onText(webSocket, data, last);
-                        }
-                        break;
-                    }
                     case "msg": {
                         try {
                             Object msg = res.get("msg");
-                            Object id = res.get("id");
-                            String uuid = this.plugin.getUuid(id.toString());
+                            Object uuid = res.get("uuid");
                             if (uuid != null && uuid.toString() != "null") {
                                 String playerName = this.server.getOfflinePlayer(
-                                        UUID.fromString(uuid)).getName();
+                                        UUID.fromString(uuid.toString())).getName();
                                 this.server.broadcastMessage(String.format(
                                         "<%s> %s", playerName, msg.toString()));
                             }
@@ -155,7 +140,7 @@ public class WebSocketClient {
                             }
                         }
                         catch (JSONException e) {
-                            this.sendError(webSocket, e, "Message, name or id not in JSON");
+                            this.sendError(webSocket, e, "Message, uuid, name or id not in JSON");
                             return Listener.super.onText(webSocket, data, last);
                         }
                         break;
