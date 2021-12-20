@@ -1,5 +1,5 @@
-main: tootymc.Tooty
-name: TootyMC
+main: xyz.minecat.Minecat
+name: minecat
 version: 0.5.0-b
 author: ooliver1 - Oliver WIlkes
 api-version: 1.17

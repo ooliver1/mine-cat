@@ -1,4 +1,4 @@
-package tootymc;
+package xyz.minecat;
 
 import org.bukkit.Server;
 import org.json.JSONObject;
@@ -11,12 +11,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class JoinLeaveListeners implements Listener {
-    private Tooty plugin;
+    private Minecat plugin;
     private Logger logger;
     private Server mcServer;
     private WebSocket client;
 
-    public JoinLeaveListeners(Tooty plugin, WebSocket client) {
+    public JoinLeaveListeners(Minecat plugin, WebSocket client) {
         this.client = client;
         this.plugin = plugin;
         mcServer = plugin.getServer();

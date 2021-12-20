@@ -1,4 +1,4 @@
-package tootymc;
+package xyz.minecat;
 
 import java.net.URI;
 import java.io.File;
@@ -20,7 +20,7 @@ public class WebSocketClient {
     private Logger logger;
     public WebSocket webSocket;
 
-    public WebSocketClient(Tooty plugin) {
+    public WebSocketClient(Minecat plugin) {
         logger = plugin.getLogger();
         HttpClient httpClient = HttpClient.newHttpClient();
         try {
@@ -32,7 +32,7 @@ public class WebSocketClient {
             this.webSocket = webSocket;
         }
         catch (CompletionException e) {
-            logger.warning("Failed to connect to tooty ;(");
+            logger.warning("Failed to connect to minecat ;(");
         }
     }
 
@@ -47,7 +47,7 @@ public class WebSocketClient {
         private File dataFolder;
         private static final String version = "0.5.0-b";
 
-        public WsClient(Tooty plugin) {
+        public WsClient(Minecat plugin) {
             this.uuid = plugin.getUuid();
             this.server = plugin.getServer();
             this.logger = plugin.getLogger();
@@ -103,7 +103,7 @@ public class WebSocketClient {
                                                     dataFolder.getPath() + "/" + "uuid.txt", false);
                                     myWriter.write(uuid.toString());
                                     myWriter.close();
-                                    logger.info("Your uuid is in TootyMC/uuid.txt");
+                                    logger.info("Your uuid is in minecat/uuid.txt");
                                 }
                                 catch (IOException e) {
                                     this.sendError(webSocket, e, "IOException when getting uuid");

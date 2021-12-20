@@ -1,4 +1,4 @@
-package tootymc;
+package xyz.minecat;
 
 import java.io.File;
 import java.util.Scanner;
@@ -10,14 +10,14 @@ import java.io.FileNotFoundException;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.player.PlayerEvent;
 
-public class Tooty extends JavaPlugin {
+public class Minecat extends JavaPlugin {
     private WebSocket client;
     private String uuid = null;
     private Logger logger = getLogger();
 
     @Override
     public void onEnable() {
-        logger.info("Tooty is enabling...");
+        logger.info("Minecat is enabling...");
         this.saveDefaultConfig();
         logger.info("Config saved!");
         uuid = getUuid();
@@ -35,7 +35,7 @@ public class Tooty extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        logger.info("Tooty is disabling...");
+        logger.info("Minecat is disabling...");
         try {
             client.sendClose(1000, "shutting down mc server...");
         }

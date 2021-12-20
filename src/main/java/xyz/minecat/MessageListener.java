@@ -1,4 +1,4 @@
-package tootymc;
+package xyz.minecat;
 
 import org.bukkit.Server;
 import org.json.JSONObject;
@@ -9,12 +9,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class MessageListener implements Listener {
-    private Tooty plugin;
+    private Minecat plugin;
     private Logger logger;
     private Server mcServer;
     private WebSocket client;
 
-    public MessageListener(Tooty plugin, WebSocket client) {
+    public MessageListener(Minecat plugin, WebSocket client) {
         this.client = client;
         this.plugin = plugin;
         logger = plugin.getLogger();
