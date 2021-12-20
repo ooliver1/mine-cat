@@ -87,6 +87,7 @@ public class WebSocketClient {
             if (type instanceof String) {
                 String reqType = (String) type;
                 switch (reqType) {
+                    case "invalidate":
                     case "login": {
                         try {
                             Object uuid = res.get("uuid");
@@ -99,7 +100,7 @@ public class WebSocketClient {
                                     myObj.createNewFile();
                                     FileWriter myWriter =
                                             new FileWriter(
-                                                    dataFolder.getPath() + "/" + "uuid.txt");
+                                                    dataFolder.getPath() + "/" + "uuid.txt", false);
                                     myWriter.write(uuid.toString());
                                     myWriter.close();
                                     logger.info("Your uuid is in TootyMC/uuid.txt");

@@ -3,5 +3,5 @@ name: TootyMC
 version: 0.4.0-b
 author: ooliver1 - Oliver WIlkes
 api-version: 1.17
-database: true
+database: false
 api: "go away vscode this isn't required"
