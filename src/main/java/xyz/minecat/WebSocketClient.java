@@ -141,7 +141,7 @@ public class WebSocketClient {
                             }
                         }
                         catch (JSONException e) {
-                            this.sendError(webSocket, e, "Message, uuid, name or id not in JSON");
+                            this.sendError(webSocket, e, "Message, uuid or name not in JSON");
                             return Listener.super.onText(webSocket, data, last);
                         }
                         break;
