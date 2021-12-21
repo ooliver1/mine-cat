@@ -25,7 +25,7 @@ public class WebSocketClient {
         HttpClient httpClient = HttpClient.newHttpClient();
         try {
             WebSocket webSocket = httpClient.newWebSocketBuilder()
-                    .buildAsync(URI.create("ws://tooty.xyz/ws"),
+                    .buildAsync(URI.create("ws://tooty.xyz/ws/"),
                             new WsClient(plugin))
                     .join();
             logger.info("The WebSocket was created and ran asynchronously.");
@@ -34,6 +34,8 @@ public class WebSocketClient {
         catch (CompletionException e) {
             logger.warning("Failed to connect to minecat ;(");
             e.printStackTrace();
+            logger.warning("Caused by " + e.getCause().toString());
+            logger.warning("Caused by " + e.getCause().getMessage());
         }
     }
 
