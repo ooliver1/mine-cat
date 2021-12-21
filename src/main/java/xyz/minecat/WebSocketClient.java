@@ -33,6 +33,7 @@ public class WebSocketClient {
         }
         catch (CompletionException e) {
             logger.warning("Failed to connect to minecat ;(");
+            e.printStackTrace();
         }
     }
 
