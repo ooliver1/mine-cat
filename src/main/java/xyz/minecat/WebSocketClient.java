@@ -50,7 +50,7 @@ public class WebSocketClient {
         private Logger logger;
         private Server server;
         private File dataFolder;
-        private static final String version = "0.7.0-b";
+        private static final String version = "1.0.0-rc";
 
         public WsClient(Minecat plugin) {
             this.uuid = plugin.getUuid();

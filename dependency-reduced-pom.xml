@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>xyz</groupId>
   <artifactId>minecat</artifactId>
-  <version>0.7.0-b</version>
+  <version>1.0.0-rc</version>
   <build>
     <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
     <resources>
