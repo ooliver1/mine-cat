@@ -1,6 +1,6 @@
 main: xyz.minecat.Minecat
 name: minecat
-version: 0.6.0-b
+version: 0.7.0-b
 author: ooliver1 - Oliver WIlkes
 api-version: 1.17
 database: false

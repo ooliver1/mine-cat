@@ -22,10 +22,12 @@ public class WebSocketClient {
 
     public WebSocketClient(Minecat plugin) {
         logger = plugin.getLogger();
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .build();
         try {
             WebSocket webSocket = httpClient.newWebSocketBuilder()
-                    .buildAsync(URI.create("ws://tooty.xyz/ws/"),
+                    .buildAsync(URI.create("wss://tooty.xyz/ws/"),
                             new WsClient(plugin))
                     .join();
             logger.info("The WebSocket was created and ran asynchronously.");
@@ -48,7 +50,7 @@ public class WebSocketClient {
         private Logger logger;
         private Server server;
         private File dataFolder;
-        private static final String version = "0.6.0-b";
+        private static final String version = "0.7.0-b";
 
         public WsClient(Minecat plugin) {
             this.uuid = plugin.getUuid();
