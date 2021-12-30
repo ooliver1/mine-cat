@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>xyz</groupId>
   <artifactId>minecat</artifactId>
-  <version>1.2.0-rc</version>
+  <version>1.3.0-rc</version>
   <build>
     <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
     <resources>
@@ -64,8 +64,8 @@
     </dependency>
   </dependencies>
   <properties>
-    <maven.compiler.target>16</maven.compiler.target>
-    <maven.compiler.source>16</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+    <maven.compiler.source>8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>
