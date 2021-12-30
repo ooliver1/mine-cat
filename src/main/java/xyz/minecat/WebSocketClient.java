@@ -49,10 +49,12 @@ public class WebSocketClient {
         private String uuid;
         private Logger logger;
         private Server server;
+        private Minecat plugin;
         private File dataFolder;
         private static final String version = "1.0.0-rc";
 
         public WsClient(Minecat plugin) {
+            this.plugin = plugin;
             this.uuid = plugin.getUuid();
             this.server = plugin.getServer();
             this.logger = plugin.getLogger();
@@ -118,6 +120,14 @@ public class WebSocketClient {
                             else {
                                 logger.info("Logged in successfully!");
                             }
+                            try {
+                                Object set = res.get("set");
+                                if (set.toString() == "false") {
+                                    this.plugin.note = true;
+                                    logger.info("You have not set up with discord!");
+                                }
+                            }
+                            catch (JSONException e) {}
                         }
                         catch (JSONException e) {
                             this.sendError(webSocket, e, "Uuid not found in JSON");

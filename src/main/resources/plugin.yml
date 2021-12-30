@@ -1,7 +1,6 @@
 main: xyz.minecat.Minecat
 name: minecat
-version: 1.0.0-rc
+version: 1.2.0-rc
 author: ooliver1 - Oliver WIlkes
-api-version: 1.17
 database: false
 api: "go away vscode this isn't required"

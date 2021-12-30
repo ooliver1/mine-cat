@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerEvent;
 public class Minecat extends JavaPlugin {
     private WebSocket client;
     private String uuid = null;
+    public boolean note = false;
     private Logger logger = getLogger();
 
     @Override
