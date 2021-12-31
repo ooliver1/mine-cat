@@ -51,7 +51,7 @@ public class WebSocketClient {
         private Server server;
         private Minecat plugin;
         private File dataFolder;
-        private static final String version = "1.0.0-rc";
+        private static final String version = "1.3.1-rc";
 
         public WsClient(Minecat plugin) {
             this.plugin = plugin;
@@ -127,7 +127,8 @@ public class WebSocketClient {
                                     logger.info("You have not set up with discord!");
                                 }
                             }
-                            catch (JSONException e) {}
+                            catch (JSONException e) {
+                            }
                         }
                         catch (JSONException e) {
                             this.sendError(webSocket, e, "Uuid not found in JSON");

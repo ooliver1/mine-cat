@@ -7,6 +7,7 @@ import java.net.http.WebSocket;
 import org.bukkit.entity.Player;
 import java.util.logging.Logger;
 import java.io.FileNotFoundException;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.player.PlayerEvent;
 
@@ -73,6 +74,6 @@ public class Minecat extends JavaPlugin {
         String uuid = player.getUniqueId().toString();
         String name = player.getDisplayName();
         req.put("uuid", uuid);
-        req.put("name", name);
+        req.put("name", ChatColor.stripColor(name));
     }
 }
