@@ -32,4 +32,8 @@ public class MessageListener implements Listener {
         this.plugin.putPlayer(event, req);
         client.sendText(req.toString(), true);
     }
+
+    public void reload(WebSocket client) {
+        this.client = client;
+    }
 }

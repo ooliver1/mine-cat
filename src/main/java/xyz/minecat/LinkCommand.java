@@ -42,4 +42,8 @@ public class LinkCommand implements CommandExecutor {
 
         return true;
     }
+
+    public void reload(WebSocket client) {
+        this.client = client;
+    }
 }

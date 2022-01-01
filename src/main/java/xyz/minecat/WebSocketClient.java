@@ -13,14 +13,18 @@ import java.net.http.WebSocket;
 import java.net.http.HttpClient;
 import java.util.logging.Logger;
 import java.net.http.WebSocket.Listener;
+import java.net.http.HttpTimeoutException;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.CompletionException;
+import java.net.http.WebSocketHandshakeException;
 
 public class WebSocketClient {
     private Logger logger;
+    private Minecat plugin;
     public WebSocket webSocket;
 
     public WebSocketClient(Minecat plugin) {
+        this.plugin = plugin;
         logger = plugin.getLogger();
         HttpClient httpClient = HttpClient.newBuilder()
                 .followRedirects(HttpClient.Redirect.NORMAL)
@@ -35,9 +39,18 @@ public class WebSocketClient {
         }
         catch (CompletionException e) {
             logger.warning("Failed to connect to minecat ;(");
-            e.printStackTrace();
-            logger.warning("Caused by " + e.getCause().toString());
-            logger.warning("Caused by " + e.getCause().getMessage());
+            if (e.getCause() instanceof WebSocketHandshakeException
+                    || e.getCause() instanceof HttpTimeoutException) {
+                logger.info(
+                        "Attempting reload in " + String.valueOf(this.plugin.getWsReloadTime()) + "s");
+                this.plugin.reloadWs();
+            }
+            else {
+                e.printStackTrace();
+                logger.warning("Caused by " + e.getCause().toString());
+                logger.warning("Caused by " + e.getCause().getMessage());
+            }
+            this.plugin.reloads = 0;
         }
     }
 
@@ -51,7 +64,7 @@ public class WebSocketClient {
         private Server server;
         private Minecat plugin;
         private File dataFolder;
-        private static final String version = "2.0.0";
+        private static final String version = "2.1.0";
 
         public WsClient(Minecat plugin) {
             this.plugin = plugin;
@@ -171,6 +184,8 @@ public class WebSocketClient {
         public CompletionStage<?> onClose(WebSocket webSocket, int statusCode, String reason) {
             logger.warning("Websocket closed with status "
                     + statusCode + ", reason: " + reason);
+            logger.info("Attempting reload in " + String.valueOf(this.plugin.getWsReloadTime()) + "s");
+            this.plugin.reloadWs();
             return Listener.super.onClose(webSocket, statusCode, reason);
         }
 

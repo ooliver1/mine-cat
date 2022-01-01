@@ -10,12 +10,19 @@ import java.io.FileNotFoundException;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public class Minecat extends JavaPlugin {
+    public int reloads = 0;
     private WebSocket client;
     private String uuid = null;
     public boolean note = false;
     private Logger logger = getLogger();
+
+    private MessageListener messageListener;
+    private AdvancementListener advancementListener;
+    private JoinLeaveListeners joinLeaveListeners;
+    private LinkCommand linkCommand;
 
     @Override
     public void onEnable() {
@@ -24,16 +31,21 @@ public class Minecat extends JavaPlugin {
         logger.info("Config saved!");
         uuid = getUuid();
         logger.info("Your uuid is: '" + uuid + "'");
+
         WebSocketClient wsClient = new WebSocketClient(this);
         logger.info("Websocket client created!");
         this.client = wsClient.getClient();
-        new MessageListener(this, this.client);
+
+        this.messageListener = new MessageListener(this, this.client);
         logger.info("MessageListener is enabled!");
-        new AdvancementListener(this, this.client);
+
+        this.advancementListener = new AdvancementListener(this, this.client);
         logger.info("AdvancementListener is enabled!");
-        new JoinLeaveListeners(this, this.client);
+
+        this.joinLeaveListeners = new JoinLeaveListeners(this, this.client);
         logger.info("JoinLeaveListeners is enabled!");
-        new LinkCommand(this, this.client);
+
+        this.linkCommand = new LinkCommand(this, this.client);
         logger.info("LinkCommand is enabled!");
     }
 
@@ -77,5 +89,31 @@ public class Minecat extends JavaPlugin {
         String name = player.getDisplayName();
         req.put("uuid", uuid);
         req.put("name", ChatColor.stripColor(name));
+    }
+
+    public int getWsReloadTime() {
+        switch (this.reloads) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                return 10;
+            default:
+                return 300;
+        }
+    }
+
+    public void reloadWs() {
+        BukkitScheduler scheduler = getServer().getScheduler();
+        scheduler.runTaskLater(this, () -> {
+            this.reloads++;
+            this.client = new WebSocketClient(this).getClient();
+
+            this.messageListener.reload(this.client);
+            this.advancementListener.reload(this.client);
+            this.joinLeaveListeners.reload(this.client);
+            this.linkCommand.reload(this.client);
+        }, 20L * this.getWsReloadTime());
     }
 }

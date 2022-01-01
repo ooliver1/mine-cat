@@ -65,4 +65,8 @@ public class AdvancementListener implements Listener {
     private String getUrl(String raw) throws IndexOutOfBoundsException {
         return this.plugin.getConfig().getStringList(raw).get(2);
     }
+
+    public void reload(WebSocket client) {
+        this.client = client;
+    }
 }

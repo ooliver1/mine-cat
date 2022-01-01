@@ -76,4 +76,8 @@ public class JoinLeaveListeners implements Listener {
         client.sendText(req.toString(), true);
         logger.info("Player" + type);
     }
+
+    public void reload(WebSocket client) {
+        this.client = client;
+    }
 }
