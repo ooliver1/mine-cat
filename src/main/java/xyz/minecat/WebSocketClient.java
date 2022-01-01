@@ -51,7 +51,7 @@ public class WebSocketClient {
         private Server server;
         private Minecat plugin;
         private File dataFolder;
-        private static final String version = "1.3.1-rc";
+        private static final String version = "2.0.0";
 
         public WsClient(Minecat plugin) {
             this.plugin = plugin;

@@ -1,7 +1,11 @@
 main: xyz.minecat.Minecat
 name: minecat
-version: 1.3.1-rc
+version: 2.0.0
 author: ooliver1 - Oliver WIlkes
 database: false
 api: "go away vscode this isn't required"
 api-version: 1.13
+commands:
+  link:
+    description: Get your auth code for minecat!
+    usage: /<command>

@@ -33,6 +33,8 @@ public class Minecat extends JavaPlugin {
         logger.info("AdvancementListener is enabled!");
         new JoinLeaveListeners(this, this.client);
         logger.info("JoinLeaveListeners is enabled!");
+        new LinkCommand(this, this.client);
+        logger.info("LinkCommand is enabled!");
     }
 
     @Override
