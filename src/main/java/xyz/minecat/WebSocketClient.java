@@ -216,7 +216,7 @@ public class WebSocketClient {
                             JSONObject req = new JSONObject();
                             req.put("type", "all");
                             req.put("id", id.toString());
-                            req.put("players", playerList.toString());
+                            req.put("players", playerList);
                             webSocket.sendText(req.toString(), true);
                         }
                         catch (JSONException e) {
