@@ -3,15 +3,19 @@ package xyz.minecat;
 import java.net.URI;
 import java.io.File;
 import java.util.UUID;
+import java.util.Vector;
 import org.bukkit.Server;
+import java.util.HashMap;
 import java.io.FileWriter;
 import java.io.IOException;
 import org.json.JSONObject;
 import org.bukkit.ChatColor;
+import java.util.Collection;
 import org.json.JSONException;
 import java.net.http.WebSocket;
 import java.net.http.HttpClient;
 import java.util.logging.Logger;
+import org.bukkit.entity.Player;
 import java.net.http.WebSocket.Listener;
 import java.net.http.HttpTimeoutException;
 import java.util.concurrent.CompletionStage;
@@ -64,6 +68,7 @@ public class WebSocketClient {
         private Server server;
         private Minecat plugin;
         private File dataFolder;
+        private long lastNotify = 0;
         private static final String version = "2.1.0";
 
         public WsClient(Minecat plugin) {
@@ -174,6 +179,50 @@ public class WebSocketClient {
                             return Listener.super.onText(webSocket, data, last);
                         }
                         break;
+                    }
+                    case "linked": {
+                        try {
+                            Object linked = res.get("linked");
+                            if (linked.toString() == "false") {
+                                Object uuid = res.get("uuid");
+                                Player player = this.server.getPlayer(
+                                        UUID.fromString(uuid.toString()));
+                                if ((System.currentTimeMillis() - this.lastNotify) > 1200000) {
+                                    player.sendMessage(ChatColor.RED + "You have not linked your discord account!");
+                                    player.sendMessage("If you want your discord account linked"
+                                            + " to minecat, please type /link"
+                                            + " and use your code with `mc linkuser`"
+                                            + " in discord.");
+                                    this.lastNotify = System.currentTimeMillis();
+                                }
+                            }
+                        }
+                        catch (JSONException e) {
+                            this.sendError(webSocket, e, "Linked or uuid not found in JSON");
+                            return Listener.super.onText(webSocket, data, last);
+                        }
+                    }
+                    case "all": {
+                        try {
+                            Object id = res.get("id");
+                            Collection<? extends Player> players = this.server.getOnlinePlayers();
+                            Vector<HashMap<String, String>> playerList = new Vector<>();
+                            for (Player player : players) {
+                                HashMap<String, String> playerMap = new HashMap<>();
+                                playerMap.put("name", player.getName());
+                                playerMap.put("uuid", player.getUniqueId().toString());
+                                playerList.add(playerMap);
+                            }
+                            JSONObject req = new JSONObject();
+                            req.put("type", "all");
+                            req.put("id", id.toString());
+                            req.put("players", playerList.toString());
+                            webSocket.sendText(req.toString(), true);
+                        }
+                        catch (JSONException e) {
+                            this.sendError(webSocket, e, "Id not in JSON");
+                            return Listener.super.onText(webSocket, data, last);
+                        }
                     }
                 }
             }
