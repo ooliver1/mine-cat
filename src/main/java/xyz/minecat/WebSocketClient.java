@@ -69,7 +69,7 @@ public class WebSocketClient {
         private Minecat plugin;
         private File dataFolder;
         private long lastNotify = 0;
-        private static final String version = "2.1.0";
+        private static final String version = "2.1.1";
 
         public WsClient(Minecat plugin) {
             this.plugin = plugin;
@@ -201,6 +201,7 @@ public class WebSocketClient {
                             this.sendError(webSocket, e, "Linked or uuid not found in JSON");
                             return Listener.super.onText(webSocket, data, last);
                         }
+                        break;
                     }
                     case "all": {
                         try {
