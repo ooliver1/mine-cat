@@ -2,6 +2,7 @@ package xyz.minecat;
 
 import java.net.URI;
 import java.io.File;
+import java.awt.Color;
 import java.util.UUID;
 import java.util.Vector;
 import org.bukkit.Server;
@@ -46,7 +47,8 @@ public class WebSocketClient {
             if (e.getCause() instanceof WebSocketHandshakeException
                     || e.getCause() instanceof HttpTimeoutException) {
                 logger.info(
-                        "Attempting reload in " + String.valueOf(this.plugin.getWsReloadTime()) + "s");
+                        "Attempting reload in " + String.valueOf(this.plugin.getWsReloadTime())
+                                + "s");
                 this.plugin.reloadWs();
             }
             else {
@@ -69,7 +71,7 @@ public class WebSocketClient {
         private Minecat plugin;
         private File dataFolder;
         private long lastNotify = 0;
-        private static final String version = "2.1.1";
+        private static final String version = "2.2.0";
 
         public WsClient(Minecat plugin) {
             this.plugin = plugin;
@@ -88,6 +90,128 @@ public class WebSocketClient {
             req.put("version", version);
             webSocket.sendText(req.toString(), true);
             Listener.super.onOpen(webSocket);
+        }
+
+        private CompletionStage<?> handleMsg(WebSocket webSocket, CharSequence data, boolean last,
+                JSONObject res) {
+            try {
+                Object msg = res.get("msg");
+                Object uuid = res.get("uuid");
+                Object color = res.get("color");
+                if (uuid != null && uuid.toString() != "null") {
+                    String playerName = this.server.getOfflinePlayer(
+                            UUID.fromString(uuid.toString())).getName();
+                    if (color != null && color.toString() != "null") {
+                        this.server.broadcastMessage(String.format("<%s%s> %s",
+                                net.md_5.bungee.api.ChatColor.of(Color.decode(color.toString())),
+                                playerName, msg.toString()));
+                    }
+                    this.server
+                            .broadcastMessage(String.format("<%s> %s", playerName, msg.toString()));
+                }
+                else {
+                    String playerName = res.get("name").toString();
+                    logger.info(String.format(
+                            "<%s%s%s> %s", ChatColor.BLUE, playerName, ChatColor.RESET,
+                            msg.toString()));
+                    this.server.broadcastMessage(String.format(
+                            "<%s%s%s> %s", ChatColor.BLUE, playerName, ChatColor.RESET,
+                            msg.toString()));
+                }
+            }
+            catch (JSONException e) {
+                this.sendError(webSocket, e, "Message, uuid or name not in JSON");
+            }
+            return Listener.super.onText(webSocket, data, last);
+        }
+
+        private CompletionStage<?> handleLink(WebSocket webSocket, CharSequence data, boolean last,
+                JSONObject res) {
+            try {
+                Object linked = res.get("linked");
+                if (linked.toString() == "false") {
+                    Object uuid = res.get("uuid");
+                    Player player = this.server.getPlayer(
+                            UUID.fromString(uuid.toString()));
+                    if ((System.currentTimeMillis() - this.lastNotify) > 1200000) {
+                        player.sendMessage(ChatColor.RED
+                                + "You have not linked your discord account!");
+                        player.sendMessage("If you want your discord account linked to minecat, "
+                                + "please type /link and use your code with `mc linkuser` in discord.");
+                        this.lastNotify = System.currentTimeMillis();
+                    }
+                }
+            }
+            catch (JSONException e) {
+                this.sendError(webSocket, e, "Linked or uuid not found in JSON");
+            }
+            return Listener.super.onText(webSocket, data, last);
+        }
+
+        private CompletionStage<?> handleAll(WebSocket webSocket, CharSequence data, boolean last,
+                JSONObject res) {
+            try {
+                Object id = res.get("id");
+                Collection<? extends Player> players = this.server.getOnlinePlayers();
+                Vector<HashMap<String, String>> playerList = new Vector<>();
+                for (Player player : players) {
+                    HashMap<String, String> playerMap = new HashMap<>();
+                    playerMap.put("name", player.getName());
+                    playerMap.put("uuid", player.getUniqueId().toString());
+                    playerList.add(playerMap);
+                }
+                JSONObject req = new JSONObject();
+                req.put("type", "all");
+                req.put("id", id.toString());
+                req.put("players", playerList);
+                webSocket.sendText(req.toString(), true);
+            }
+            catch (JSONException e) {
+                this.sendError(webSocket, e, "Id not in JSON");
+            }
+            return Listener.super.onText(webSocket, data, last);
+        }
+
+        private CompletionStage<?> handleLogin(WebSocket webSocket, CharSequence data, boolean last,
+                JSONObject res) {
+            try {
+                Object uuid = res.get("uuid");
+                if (uuid != null && uuid != "null" && uuid.toString() != "null") {
+                    try {
+                        if (!dataFolder.exists()) {
+                            dataFolder.mkdir();
+                        }
+                        File myObj = new File(dataFolder, "uuid.txt");
+                        myObj.createNewFile();
+                        FileWriter myWriter = new FileWriter(
+                                dataFolder.getPath() + "/" + "uuid.txt", false);
+                        myWriter.write(uuid.toString());
+                        myWriter.close();
+                        logger.info("Your uuid is in minecat/uuid.txt");
+                    }
+                    catch (IOException e) {
+                        this.sendError(webSocket, e, "IOException when getting uuid");
+                        return Listener.super.onText(webSocket, data, last);
+                    }
+                }
+                else {
+                    logger.info("Logged in successfully!");
+                }
+                try {
+                    Object set = res.get("set");
+                    if (set.toString() == "false") {
+                        this.plugin.note = true;
+                        logger.info("You have not set up with discord!");
+                    }
+                }
+                catch (JSONException e) {
+                    this.sendError(webSocket, e, "No set found in JSON");
+                }
+            }
+            catch (JSONException e) {
+                this.sendError(webSocket, e, "Uuid not found in JSON");
+            }
+            return Listener.super.onText(webSocket, data, last);
         }
 
         @Override
@@ -114,116 +238,16 @@ public class WebSocketClient {
                 switch (reqType) {
                     case "invalidate":
                     case "login": {
-                        try {
-                            Object uuid = res.get("uuid");
-                            if (uuid != null && uuid != "null" && uuid.toString() != "null") {
-                                try {
-                                    if (!dataFolder.exists()) {
-                                        dataFolder.mkdir();
-                                    }
-                                    File myObj = new File(dataFolder, "uuid.txt");
-                                    myObj.createNewFile();
-                                    FileWriter myWriter =
-                                            new FileWriter(
-                                                    dataFolder.getPath() + "/" + "uuid.txt", false);
-                                    myWriter.write(uuid.toString());
-                                    myWriter.close();
-                                    logger.info("Your uuid is in minecat/uuid.txt");
-                                }
-                                catch (IOException e) {
-                                    this.sendError(webSocket, e, "IOException when getting uuid");
-                                    return Listener.super.onText(webSocket, data, last);
-                                }
-                            }
-                            else {
-                                logger.info("Logged in successfully!");
-                            }
-                            try {
-                                Object set = res.get("set");
-                                if (set.toString() == "false") {
-                                    this.plugin.note = true;
-                                    logger.info("You have not set up with discord!");
-                                }
-                            }
-                            catch (JSONException e) {
-                            }
-                        }
-                        catch (JSONException e) {
-                            this.sendError(webSocket, e, "Uuid not found in JSON");
-                            return Listener.super.onText(webSocket, data, last);
-                        }
-                        break;
+                        return this.handleLogin(webSocket, data, last, res);
                     }
                     case "msg": {
-                        try {
-                            Object msg = res.get("msg");
-                            Object uuid = res.get("uuid");
-                            if (uuid != null && uuid.toString() != "null") {
-                                String playerName = this.server.getOfflinePlayer(
-                                        UUID.fromString(uuid.toString())).getName();
-                                this.server.broadcastMessage(String.format(
-                                        "<%s> %s", playerName, msg.toString()));
-                            }
-                            else {
-                                String playerName = res.get("name").toString();
-                                logger.info(String.format(
-                                        "<%s%s%s> %s", ChatColor.BLUE,
-                                        playerName, ChatColor.RESET, msg.toString()));
-                                this.server.broadcastMessage(String.format(
-                                        "<%s%s%s> %s", ChatColor.BLUE,
-                                        playerName, ChatColor.RESET, msg.toString()));
-                            }
-                        }
-                        catch (JSONException e) {
-                            this.sendError(webSocket, e, "Message, uuid or name not in JSON");
-                            return Listener.super.onText(webSocket, data, last);
-                        }
-                        break;
+                        return this.handleMsg(webSocket, data, last, res);
                     }
                     case "linked": {
-                        try {
-                            Object linked = res.get("linked");
-                            if (linked.toString() == "false") {
-                                Object uuid = res.get("uuid");
-                                Player player = this.server.getPlayer(
-                                        UUID.fromString(uuid.toString()));
-                                if ((System.currentTimeMillis() - this.lastNotify) > 1200000) {
-                                    player.sendMessage(ChatColor.RED + "You have not linked your discord account!");
-                                    player.sendMessage("If you want your discord account linked"
-                                            + " to minecat, please type /link"
-                                            + " and use your code with `mc linkuser`"
-                                            + " in discord.");
-                                    this.lastNotify = System.currentTimeMillis();
-                                }
-                            }
-                        }
-                        catch (JSONException e) {
-                            this.sendError(webSocket, e, "Linked or uuid not found in JSON");
-                            return Listener.super.onText(webSocket, data, last);
-                        }
-                        break;
+                        return this.handleLink(webSocket, data, last, res);
                     }
                     case "all": {
-                        try {
-                            Object id = res.get("id");
-                            Collection<? extends Player> players = this.server.getOnlinePlayers();
-                            Vector<HashMap<String, String>> playerList = new Vector<>();
-                            for (Player player : players) {
-                                HashMap<String, String> playerMap = new HashMap<>();
-                                playerMap.put("name", player.getName());
-                                playerMap.put("uuid", player.getUniqueId().toString());
-                                playerList.add(playerMap);
-                            }
-                            JSONObject req = new JSONObject();
-                            req.put("type", "all");
-                            req.put("id", id.toString());
-                            req.put("players", playerList);
-                            webSocket.sendText(req.toString(), true);
-                        }
-                        catch (JSONException e) {
-                            this.sendError(webSocket, e, "Id not in JSON");
-                            return Listener.super.onText(webSocket, data, last);
-                        }
+                        return this.handleAll(webSocket, data, last, res);
                     }
                 }
             }
@@ -232,9 +256,9 @@ public class WebSocketClient {
 
         @Override
         public CompletionStage<?> onClose(WebSocket webSocket, int statusCode, String reason) {
-            logger.warning("Websocket closed with status "
-                    + statusCode + ", reason: " + reason);
-            logger.info("Attempting reload in " + String.valueOf(this.plugin.getWsReloadTime()) + "s");
+            logger.warning("Websocket closed with status " + statusCode + ": " + reason);
+            logger.info(
+                    "Attempting reload in " + String.valueOf(this.plugin.getWsReloadTime()) + "s");
             this.plugin.reloadWs();
             return Listener.super.onClose(webSocket, statusCode, reason);
         }

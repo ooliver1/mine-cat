@@ -94,13 +94,17 @@ public class Minecat extends JavaPlugin {
     public int getWsReloadTime() {
         switch (this.reloads) {
             case 0:
+                return 1;
             case 1:
+                return 2;
             case 2:
+                return 4;
             case 3:
+                return 8;
             case 4:
-                return 10;
+                return 16;
             default:
-                return 300;
+                return 32;
         }
     }
 
