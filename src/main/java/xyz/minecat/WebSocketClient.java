@@ -102,12 +102,14 @@ public class WebSocketClient {
                     String playerName = this.server.getOfflinePlayer(
                             UUID.fromString(uuid.toString())).getName();
                     if (color != null && color.toString() != "null") {
-                        this.server.broadcastMessage(String.format("<%s%s> %s",
+                        this.server.broadcastMessage(String.format("<%s%s%s> %s",
                                 net.md_5.bungee.api.ChatColor.of(Color.decode(color.toString())),
-                                playerName, msg.toString()));
+                                playerName, net.md_t.bungee.api.ChatColor.RESET, msg.toString()));
                     }
-                    this.server
-                            .broadcastMessage(String.format("<%s> %s", playerName, msg.toString()));
+                    else {
+                        this.server
+                                .broadcastMessage(String.format("<%s> %s", playerName, msg.toString()));
+                    }
                 }
                 else {
                     String playerName = res.get("name").toString();
