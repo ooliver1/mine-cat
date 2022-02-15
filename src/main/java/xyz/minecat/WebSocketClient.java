@@ -104,7 +104,7 @@ public class WebSocketClient {
                     if (color != null && color.toString() != "null") {
                         this.server.broadcastMessage(String.format("<%s%s%s> %s",
                                 net.md_5.bungee.api.ChatColor.of(Color.decode(color.toString())),
-                                playerName, net.md_t.bungee.api.ChatColor.RESET, msg.toString()));
+                                playerName, net.md_5.bungee.api.ChatColor.RESET, msg.toString()));
                     }
                     else {
                         this.server
