@@ -1,6 +1,7 @@
 package xyz.minecat;
 
 import java.io.File;
+import java.util.Random;
 import java.util.Scanner;
 import org.json.JSONObject;
 import java.net.http.WebSocket;
@@ -91,25 +92,27 @@ public class Minecat extends JavaPlugin {
         req.put("name", ChatColor.stripColor(name));
     }
 
-    public int getWsReloadTime() {
+    public float getWsReloadTime() {
         switch (this.reloads) {
             case 0:
-                return 1;
+                return 0.25F;
             case 1:
-                return 2;
+                return 0.5F;
             case 2:
-                return 4;
+                return 1F;
             case 3:
-                return 8;
+                return 2F;
             case 4:
-                return 16;
+                return 4F;
             default:
-                return 32;
+                return 8F;
         }
     }
 
     public void reloadWs() {
         BukkitScheduler scheduler = getServer().getScheduler();
+        Random random = new Random();
+        long time = (long) ((random.nextFloat() * 2) + this.getWsReloadTime()) * 20;
         scheduler.runTaskLater(this, () -> {
             this.reloads++;
             this.client = new WebSocketClient(this).getClient();
@@ -118,6 +121,6 @@ public class Minecat extends JavaPlugin {
             this.advancementListener.reload(this.client);
             this.joinLeaveListeners.reload(this.client);
             this.linkCommand.reload(this.client);
-        }, 20L * this.getWsReloadTime());
+        }, time);
     }
 }
