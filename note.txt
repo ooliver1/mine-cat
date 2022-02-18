@@ -1,2 +1,3 @@
 mvn dependency:resolve -Dclassifier=javadoc
 1 + 1 = 2
+# this was so I remember how to get javadoc's in maven :)

@@ -1,4 +1,6 @@
-package tootymc;
+/* This isn't licensed really, credit maven or something */
+
+package minecat;
 
 import static org.junit.Assert.assertTrue;
 
