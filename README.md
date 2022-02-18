@@ -4,6 +4,9 @@ Minecat is a Minecraft plugin used to connect with Discord!
 
 This was my first full project with java, I loved and hated it but I learned a lot from this. Websockets, java, plugins, java 'compiling' and also how weirdly strictly OOP java is but thats cool.
 
+[Extra info here](https://tiny.one/minecat)
+![Showcase of minecat](https://i.imgur.com/NtiWxsg.png)
+
 ## Build from source???
 
 Now I don't have much of an idea how I set this up either however:
