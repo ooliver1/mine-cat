@@ -2,10 +2,9 @@ package xyz.minecat
 
 import org.bukkit.plugin.java.JavaPlugin
 
+@Suppress("unused")
 class Minecat : JavaPlugin() {
-    private logger = getLogger()
-
     override fun onEnable() {
-        println("h")
+        logger.info("Minecat is enabling")
     }
 }
