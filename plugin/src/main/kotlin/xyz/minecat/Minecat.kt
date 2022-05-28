@@ -10,9 +10,9 @@ class Minecat : JavaPlugin() {
     internal var guild = config.getString("guild", "unknown")
 
     override fun onEnable() {
-        logger.info("Minecat is enabling")
+        logger.info("[mine] Minecat is enabling")
 
-        logger.info("[ws] creating ws client")
+        logger.info("[webs] creating ws client")
         wsClient = WsClient(this)
         ws = wsClient.ws
     }
