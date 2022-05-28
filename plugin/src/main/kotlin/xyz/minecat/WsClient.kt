@@ -5,9 +5,9 @@ import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
 
 class WsClient(plugin: Minecat) {
-    val url = URI("wss://minecat.ws")
+    private val url = URI("wss://minecat.ws")
 
-    val ws = object : WebSocketClient(url, mapOf("X-Guild" to plugin.guild)) {
+    internal val ws = object : WebSocketClient(url, mapOf("X-Guild" to plugin.guild)) {
         override fun onOpen(handshake: ServerHandshake) {
             //
         }
