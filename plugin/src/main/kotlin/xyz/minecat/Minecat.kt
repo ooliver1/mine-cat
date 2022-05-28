@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 package xyz.minecat
 
 import org.bukkit.plugin.java.JavaPlugin
