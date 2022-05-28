@@ -33,6 +33,12 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+
+    // is this how util.logging works for slf4j
+    testImplementation("org.slf4j:slf4j-jdk14:1.7.36")
+
+    // add websocket library for thw client
+    implementation("org.java-websocket:Java-WebSocket:1.5.3")
 }
 
 spigot {
