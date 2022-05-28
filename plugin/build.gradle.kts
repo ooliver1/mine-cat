@@ -1,6 +1,7 @@
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.5.31"
+    // generates plugin.yml for the plugin
     id("kr.entree.spigradle") version "1.2.4"
 }
 
@@ -37,7 +38,7 @@ dependencies {
     // is this how util.logging works for slf4j
     testImplementation("org.slf4j:slf4j-jdk14:1.7.36")
 
-    // add websocket library for thw client
+    // add websocket library for the client
     implementation("org.java-websocket:Java-WebSocket:1.5.3")
 }
 
