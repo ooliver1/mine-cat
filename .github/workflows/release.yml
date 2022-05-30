@@ -1,7 +1,8 @@
 on:
   push:
     branches:
-      - master
+      # add back master when merged
+#     - master
       - dev
 
 name: release-please
