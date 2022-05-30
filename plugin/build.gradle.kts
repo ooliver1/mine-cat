@@ -9,7 +9,6 @@ group = "xyz.minecat"
 version = "1.0.0a"  // x-release-please-version
 
 repositories {
-    // Use Maven Central for resolving dependencies.
     mavenCentral()
 
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
