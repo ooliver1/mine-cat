@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "xyz.minecat"
-version = "3.0.0a"  // x-release-please-version
+version = "1.0.0a"  // x-release-please-version
 
 repositories {
     // Use Maven Central for resolving dependencies.
