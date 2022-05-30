@@ -11,6 +11,7 @@ version = "1.0.0-a"  // x-release-please-version
 repositories {
     mavenCentral()
 
+    // repositories for non-maven deps
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://oss.sonatype.org/content/repositories/central")
