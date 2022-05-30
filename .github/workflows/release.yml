@@ -15,3 +15,4 @@ jobs:
           release-type: node
           package-name: release-please-action
           pre-release: ${{ github.ref_name != 'master' }}
+          extra-files: plugin/build.gradle.kts
