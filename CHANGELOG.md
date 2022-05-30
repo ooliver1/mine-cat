@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.0](https://github.com/ooliver1/mine-cat/compare/v1.0.0...v1.0.0) (2022-05-30)
+
+
+### Bug Fixes
+
+* i just want a working release ([4a0496e](https://github.com/ooliver1/mine-cat/commit/4a0496e463e3ab5be0dc83924fb9921a468b645f))
+* i just want release please ty ([f878a40](https://github.com/ooliver1/mine-cat/commit/f878a406d46b0765ec64dad4a611af91c3454878))
+
 ## 1.0.0 (2022-05-30)
 
 
