@@ -2,7 +2,7 @@ plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.5.31"
     // generates plugin.yml for the plugin
-    id("kr.entree.spigradle") version "1.2.4"
+    id("kr.entree.spigradle") version "2.4.2"
 }
 
 group = "xyz.minecat"
