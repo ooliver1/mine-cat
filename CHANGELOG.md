@@ -1,5 +1,3 @@
-# Changelog
-
 ## [1.0.0-a](https://github.com/ooliver1/mine-cat/compare/v1.0.0-a...v1.0.0-a) (2022-05-31)
 
 
