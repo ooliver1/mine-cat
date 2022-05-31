@@ -16,7 +16,6 @@ jobs:
         with:
           release-type: node
           package-name: release-please-action
-          draft: ${{ github.ref_name != 'master' }}
           extra-files: plugin/build.gradle.kts
           default-branch: ${{ github.ref_name }}
       - name: Parse semver string
