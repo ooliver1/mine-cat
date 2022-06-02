@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.6.21"
@@ -6,7 +8,15 @@ plugins {
 }
 
 group = "xyz.minecat"
-version = "1.0.1-a"  // x-release-please-version
+version = "0.0.1"  // x-release-please-version
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+}
 
 repositories {
     mavenCentral()
@@ -36,11 +46,11 @@ dependencies {
     // add spigot as that is the api for minecraft plugins usually
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
 
-    // is this how util.logging works for slf4j
-    testImplementation("org.slf4j:slf4j-jdk14:1.7.36")
-
     // add websocket library for the client
     implementation("org.java-websocket:Java-WebSocket:1.5.3")
+
+    // used for json serialisation over the websocket
+    implementation("org.json:json:20220320")
 }
 
 spigot {
