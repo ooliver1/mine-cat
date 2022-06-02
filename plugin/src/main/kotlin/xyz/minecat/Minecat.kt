@@ -9,7 +9,8 @@ import org.java_websocket.client.WebSocketClient
 class Minecat : JavaPlugin() {
     private lateinit var wsClient: WsClient
     internal lateinit var ws: WebSocketClient
-    internal var guild = config.getString("guild", "unknown")
+    internal val guild get() = config.getString("guild", "unknown")
+    internal val uuid get() = config.getString("uuid", "unknown")
 
     override fun onEnable() {
         logger.info("[mine] Minecat is enabling")
