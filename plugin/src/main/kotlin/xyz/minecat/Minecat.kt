@@ -14,8 +14,11 @@ class Minecat : JavaPlugin() {
     override fun onEnable() {
         logger.info("[mine] Minecat is enabling")
 
-        logger.info("[webs] creating ws client")
+        logger.info("[mine] creating ws client")
         wsClient = WsClient(this)
         ws = wsClient.ws
+
+        logger.info("[mine] starting ws client")
+        ws.connect()
     }
 }
