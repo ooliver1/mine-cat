@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "xyz.minecat"
-version = "1.0.1-a"  // x-release-please-version
+version = "0.0.1"  // x-release-please-version
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
