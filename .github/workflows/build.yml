@@ -12,7 +12,7 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
-    name: Java${{ matrix.java }}-${{ matrix.distribution }} Gradle${{ matrix.gradle }} ${{ matrix.os }}
+    name: Java ${{ matrix.java }}-${{ matrix.distribution }} ${{ matrix.os }}
 
     steps:
       - name: Checkout repository
