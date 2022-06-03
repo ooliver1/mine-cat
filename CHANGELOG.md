@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.0](https://github.com/ooliver1/mine-cat/compare/v0.0.1...v0.1.0) (2022-06-03)
+
+
+### Features
+
+* implement sending and receiving messages ([#31](https://github.com/ooliver1/mine-cat/issues/31)) ([9f0c57f](https://github.com/ooliver1/mine-cat/commit/9f0c57ffcb90d1130a57e1a4ea61645d9b404eed))
+
 ## [0.0.1](https://github.com/ooliver1/mine-cat/compare/v1.0.1-a...v0.0.1) (2022-06-02)
 
 
