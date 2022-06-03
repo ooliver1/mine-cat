@@ -4,6 +4,7 @@ package xyz.minecat
 
 import org.bukkit.plugin.java.JavaPlugin
 import org.java_websocket.client.WebSocketClient
+import xyz.minecat.listeners.MessageListener
 
 @Suppress("unused")
 class Minecat : JavaPlugin() {
@@ -12,6 +13,8 @@ class Minecat : JavaPlugin() {
     internal lateinit var sender: Sender
     internal lateinit var handler: Handler
     val version = "0.0.1"
+
+    private lateinit var messageListener: MessageListener
 
     internal var guild
         get() = config.getString("guild", "unknown")
@@ -36,8 +39,11 @@ class Minecat : JavaPlugin() {
         logger.fine("[mine] Creating sender")
         sender = Sender(this, ws)
 
-        logger.fine("[mine] Creating message handler")
+        logger.fine("[mine] Creating ws handler")
         handler = Handler(this)
+
+        logger.fine("[mine] Creating message listener")
+        messageListener = MessageListener(this)
 
         logger.fine("[mine] starting ws client")
         ws.connect()
