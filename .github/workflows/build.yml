@@ -24,4 +24,4 @@ jobs:
           java-version: ${{ matrix.java }}
           cache: gradle
       - name: Execute Gradle build
-        run: ./gradlew build
+        run: ./gradlew build --no-daemon
