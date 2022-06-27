@@ -12,7 +12,7 @@ class WsClient(private val plugin: Minecat) {
     private val sender = plugin.sender
     private val handler = plugin.handler
 
-    internal val ws = object : WebSocketClient(URI("wss://minecat.ws?${plugin.guild}")) {
+    internal val ws = object : WebSocketClient(URI("wss://minecat.ws?$guild_id={plugin.guild}")) {
         override fun onOpen(handshake: ServerHandshake) {
             logger.info("[webs] Connected to Minecat with status ${handshake.httpStatus}")
 
