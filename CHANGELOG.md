@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/ooliver1/mine-cat/compare/v0.1.0...v0.1.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* **wsclient:** turns out i cannot read ([b54f053](https://github.com/ooliver1/mine-cat/commit/b54f053511328b7a8eff35345133451fd29279eb))
+
 ## [0.1.0](https://github.com/ooliver1/mine-cat/compare/v0.0.1...v0.1.0) (2022-06-03)
 
 
