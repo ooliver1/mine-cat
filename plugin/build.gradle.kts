@@ -44,7 +44,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 
     // add spigot as that is the api for minecraft plugins usually
-    compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.19.1-R0.1-SNAPSHOT")
 
     // add websocket library for the client
     implementation("org.java-websocket:Java-WebSocket:1.5.3")
